@@ -1,0 +1,8 @@
+{
+  "alwaysUpdateLinks": true,
+  "newFileLocation": "folder",
+  "newFileFolderPath": "guide",
+  "attachmentFolderPath": "attach",
+  "showUnsupportedFiles": true,
+  "showInlineTitle": false
+}

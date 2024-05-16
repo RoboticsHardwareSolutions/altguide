@@ -1,0 +1,198 @@
+{
+  "main": {
+    "id": "47b1921bce33ca8d",
+    "type": "split",
+    "children": [
+      {
+        "id": "5c50b50d55a2883d",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "bf35188a832b2ad0",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "altguide.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "d90c37ec3cd8791c",
+            "type": "leaf",
+            "state": {
+              "type": "empty",
+              "state": {}
+            }
+          },
+          {
+            "id": "a29b90c9310c260c",
+            "type": "leaf",
+            "state": {
+              "type": "empty",
+              "state": {}
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "aa58d8f5b7a8d11e",
+    "type": "split",
+    "children": [
+      {
+        "id": "7235964bc2d3e4ee",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "4ba1fbdd02af9f98",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical"
+              }
+            }
+          },
+          {
+            "id": "2f0e396c1f728186",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              }
+            }
+          },
+          {
+            "id": "dcbd7e8f988fec8d",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {}
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "right": {
+    "id": "54f01af1c4a55258",
+    "type": "split",
+    "children": [
+      {
+        "id": "725ad1cfbe7d18c8",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "a533eac44fe898b0",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "altguide.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              }
+            }
+          },
+          {
+            "id": "39ca6bb81dfdb094",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "altguide.md",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              }
+            }
+          },
+          {
+            "id": "7410e236a2e44e4d",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true
+              }
+            }
+          },
+          {
+            "id": "4d96da5f28f7793b",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "altguide.md"
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:Open quick switcher": false,
+      "graph:Open graph view": false,
+      "canvas:Create new canvas": false,
+      "daily-notes:Open today's daily note": false,
+      "templates:Insert template": false,
+      "command-palette:Open command palette": false,
+      "obsidian-excalidraw-plugin:Create new drawing": false,
+      "webpage-html-export:Export Vault to HTML": false,
+      "vscode-editor:Create Code File": false
+    }
+  },
+  "active": "bf35188a832b2ad0",
+  "lastOpenFiles": [
+    "docs/index.html",
+    "docs/README.html",
+    "docs",
+    "untitled folder",
+    "files/README.md",
+    "README.md",
+    "files/tmp.gitignore",
+    "files/board_option_draw.png",
+    "attach/two_layers2.png",
+    "attach/two_layers-2.png",
+    "attach/swd.png",
+    "attach/mount_requirements.png",
+    "attach/gerber_layers.png",
+    "attach/gerber_format.png",
+    "attach/four_layers.png",
+    "attach/ext_bom.png",
+    "attach/doc.png",
+    "attach",
+    "README~.md",
+    "altlib/enclosures/k07-120l/pcb/K07-120L_pcb.pcbdoc",
+    "altlib/enclosures/k07-120l/pcb",
+    "altlib/enclosures/k07-120l/README.md",
+    "altlib/enclosures/k07-120l/enclosure/plastick_cover.m3d",
+    "altlib/enclosures/k07-120l/enclosure/pcb.m3d",
+    "altlib/enclosures/k07-120l/enclosure/metal_cover.m3d",
+    "altlib/enclosures/17-10a-95mm/README.md",
+    "altlib/README.md"
+  ]
+}
