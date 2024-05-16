@@ -14,7 +14,7 @@
               "type": "markdown",
               "state": {
                 "file": "altguide.md",
-                "mode": "source",
+                "mode": "preview",
                 "source": false
               }
             }
@@ -168,6 +168,8 @@
   "active": "bf35188a832b2ad0",
   "lastOpenFiles": [
     "docs/index.html",
+    "docs/штвуч.html",
+    "docs/altguide.html",
     "docs/README.html",
     "docs",
     "untitled folder",
@@ -190,8 +192,6 @@
     "altlib/enclosures/k07-120l/pcb",
     "altlib/enclosures/k07-120l/README.md",
     "altlib/enclosures/k07-120l/enclosure/plastick_cover.m3d",
-    "altlib/enclosures/k07-120l/enclosure/pcb.m3d",
-    "altlib/enclosures/k07-120l/enclosure/metal_cover.m3d",
     "altlib/enclosures/17-10a-95mm/README.md",
     "altlib/README.md"
   ]
