@@ -4,31 +4,11 @@
     "type": "split",
     "children": [
       {
-        "id": "5c50b50d55a2883d",
+        "id": "5b1020ffd2f86d66",
         "type": "tabs",
         "children": [
           {
-            "id": "bf35188a832b2ad0",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "altguide.md",
-                "mode": "preview",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "d90c37ec3cd8791c",
-            "type": "leaf",
-            "state": {
-              "type": "empty",
-              "state": {}
-            }
-          },
-          {
-            "id": "a29b90c9310c260c",
+            "id": "eda193bb02317c94",
             "type": "leaf",
             "state": {
               "type": "empty",
@@ -101,7 +81,6 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "altguide.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -118,7 +97,6 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "altguide.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -140,9 +118,7 @@
             "type": "leaf",
             "state": {
               "type": "outline",
-              "state": {
-                "file": "altguide.md"
-              }
+              "state": {}
             }
           }
         ]
@@ -165,8 +141,9 @@
       "vscode-editor:Create Code File": false
     }
   },
-  "active": "bf35188a832b2ad0",
+  "active": "eda193bb02317c94",
   "lastOpenFiles": [
+    "altguide.md",
     "docs/index.html",
     "docs/штвуч.html",
     "docs/altguide.html",
@@ -191,7 +168,6 @@
     "altlib/enclosures/k07-120l/pcb/K07-120L_pcb.pcbdoc",
     "altlib/enclosures/k07-120l/pcb",
     "altlib/enclosures/k07-120l/README.md",
-    "altlib/enclosures/k07-120l/enclosure/plastick_cover.m3d",
     "altlib/enclosures/17-10a-95mm/README.md",
     "altlib/README.md"
   ]
