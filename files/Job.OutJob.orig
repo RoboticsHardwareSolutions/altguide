@@ -17,11 +17,15 @@ RevisionNamingSchemeGUID=
 [OutputGroup1]
 Name=Job.OutJob
 Description=
+<<<<<<< HEAD
+TargetOutputMedium=3D STEP
+=======
 TargetOutputMedium=P&P
+>>>>>>> 3be72c6ec4cd1dcd8afe8f3727668a1cc207c74f
 VariantName=[No Variations]
 VariantScope=1
 CurrentConfigurationName=
-TargetPrinter=Microsoft Print to PDF
+TargetPrinter=Kyocera TASKalfa 2554ci
 PrinterOptions=Record=PrinterOptions|Copies=1|Duplex=1|TrueTypeOptions=3|Collate=1|PrintJobKind=1|PrintWhat=1
 OutputMedium1=Print Job
 OutputMedium1_Type=Printer
