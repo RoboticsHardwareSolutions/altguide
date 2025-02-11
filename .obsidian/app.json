@@ -4,5 +4,6 @@
   "newFileFolderPath": "guide",
   "attachmentFolderPath": "attach",
   "showUnsupportedFiles": true,
-  "showInlineTitle": false
+  "showInlineTitle": false,
+  "promptDelete": false
 }
