@@ -17,7 +17,7 @@ RevisionNamingSchemeGUID=
 [OutputGroup1]
 Name=Job.OutJob
 Description=
-TargetOutputMedium=P&P
+TargetOutputMedium=3D STEP
 VariantName=[No Variations]
 VariantScope=1
 CurrentConfigurationName=
@@ -97,7 +97,7 @@ OutputName2=Generates pick and place files
 OutputCategory2=Assembly
 OutputDocumentPath2=PCB.PcbDoc
 OutputVariantName2=
-OutputEnabled2=1
+OutputEnabled2=0
 OutputEnabled2_OutputMedium1=0
 OutputEnabled2_OutputMedium2=1
 OutputEnabled2_OutputMedium3=0
@@ -209,7 +209,7 @@ OutputEnabled7_OutputMedium7=0
 OutputEnabled7_OutputMedium8=0
 OutputDefault7=0
 Configuration7_Name1=OutputConfigurationParameter1
-Configuration7_Item1=Record=ExportSTEPView|ExportComponentOptions=0|ExportModelsOption=2|ExportHolesOption=0|CanSelectPrimitives=False|IncludeMechanicalPadHoles=False|IncludeElectricalPadHoles=False|IncludeFreePadHoles=False|ExportFoldedBoard=True|ExportFoldedBoardRate=100|ComponentSuffixType=0|ComponentSuffix= |ExportCopperOption=0|ExportCopperLayer=0|ExportPadAndViaBarrelsOnly=False|IgnoreBoardCopperLayerColors=False|ExportAsSinglePart=True|IncludeCoverLayer=True|SkipFreeBodies=False|SkipHidden=False|DocumentPath=\\Mac\Home\projects\rhs\rcan-usb-hardware\hardware\PCB.PcbDoc
+Configuration7_Item1=Record=ExportSTEPView|ExportComponentOptions=0|ExportModelsOption=2|ExportHolesOption=0|CanSelectPrimitives=False|IncludeMechanicalPadHoles=True|IncludeElectricalPadHoles=True|IncludeFreePadHoles=True|ExportFoldedBoard=True|ExportFoldedBoardRate=100|ComponentSuffixType=0|ComponentSuffix= |ExportCopperOption=0|ExportCopperLayer=0|ExportPadAndViaBarrelsOnly=False|IgnoreBoardCopperLayerColors=False|ExportAsSinglePart=True|IncludeCoverLayer=True|SkipFreeBodies=False|SkipHidden=False|DocumentPath=\\Mac\Home\projects\rhs\rusb2ttl-hardware\hardware\PCB.PcbDoc
 OutputType8=PCB 3D Print
 OutputName8=top
 OutputCategory8=Documentation
@@ -334,7 +334,7 @@ OutputFileNameMulti5==OutputName
 UseOutputNameForMulti5=0
 OutputFileNameSpecial5=
 OpenOutput5=0
-OutputFilePath6=\\Mac\Home\Downloads\robocontroller-f1-devboard\doc\drawing\
+OutputFilePath6=\\Mac\Home\projects\rhs\rusb2ttl-hardware\doc\drawing\
 ReleaseManaged6=0
 OutputBasePath6=..\doc\drawing\
 OutputPathMedia6=
@@ -429,7 +429,7 @@ OpenGerberOutput5=0
 OpenNCDrillOutput5=0
 OpenIPCOutput5=0
 EnableReload5=0
-RelativeOutputPath6=\\Mac\Home\Downloads\robocontroller-f1-devboard\doc\drawing\
+RelativeOutputPath6=\\Mac\Home\projects\rhs\rusb2ttl-hardware\doc\drawing\
 OpenOutputs6=0
 AddToProject6=0
 TimestampFolder6=0

@@ -1,6 +1,6 @@
-pcb_checker/__pycache__
-pcb_checker/.idea
-pcb_specgen/.idea
-low_name/.idea/
+utils/pcb_checker/__pycache__
+utils/pcb_checker/.idea
+utils/pcb_specgen/.idea
+utils/low_name/.idea/
 altlib/pcblibs/History/
 altlib/schlibs/History/

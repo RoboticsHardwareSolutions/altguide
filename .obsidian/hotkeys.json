@@ -1,0 +1,11 @@
+{
+  "languagetool:check": [
+    {
+      "modifiers": [
+        "Mod",
+        "Shift"
+      ],
+      "key": "G"
+    }
+  ]
+}
