@@ -467,7 +467,7 @@ overlay_color = "white"  # цвет шелкографической марки�
   - Отдельно указать на необходимость поставить вместе с платой комплектующие содержащиеся в файле  `ext_bom.csv`
   - При возникновении вопросов в части возможных замен комплектующих, провести согласование с разработчиками 
 
-## Работа с .CSV  форматом в Exel 
+## Работа с .CSV  форматом  
 
 Формат файла CSV поддерживается **всеми** электронными таблицами , включая [LibreOffice Calc](https://ru.wikipedia.org/wiki/LibreOffice_Calc "LibreOffice Calc"), [Gnumeric](https://ru.wikipedia.org/wiki/Gnumeric "Gnumeric"), [Emacs](https://ru.wikipedia.org/wiki/Emacs "Emacs"), [Microsoft Excel](https://ru.wikipedia.org/wiki/Microsoft_Excel "Microsoft Excel"), [Numbers](https://ru.wikipedia.org/wiki/Numbers "Numbers"), [ТаблицаПро](https://web.archive.org/web/20140407114802/http://softconstructors.com/ru/applications/tablepro3/index.html), [CSVed](https://ru.wikipedia.org/w/index.php?title=CSVed&action=edit&redlink=1 "CSVed (страница отсутствует)"), [KSpread](https://ru.wikipedia.org/wiki/KSpread "KSpread"), [Google Docs](https://ru.wikipedia.org/wiki/Google_Docs "Google Docs").
 **CSV (Comma-Separated Values) — это формат файлов для представления табличных данных.** 

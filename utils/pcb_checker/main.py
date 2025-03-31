@@ -22,7 +22,7 @@ def get_vault():
 if __name__ == '__main__':
     print("PCB checker запущен")
     print("Описание требований тут :")
-    print("https://gitlab.com/RoboticsHardwareSolutions/guidelines/hardware-pcb-altium-designer")
+    print("https://roboticshardwaresolutions.github.io/altguide/")
     root_folder_check(get_vault())
     gitignore_check(get_vault() + ".gitignore")
     readme_check(get_vault() + "README.md")

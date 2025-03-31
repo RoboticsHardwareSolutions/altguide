@@ -18,7 +18,7 @@ def get_row(rows, name):
     raise Exception("Sorry, cannot find ")
 
 
-def bom_check_part(rows):
+def bom_check_part(rows): # TODO бывают просто платы без компонент добавить такой вариант
     row = get_row(rows, "Part Number")
     if len(rows) < 2:
         print(" В таблице bom не хватает данных")

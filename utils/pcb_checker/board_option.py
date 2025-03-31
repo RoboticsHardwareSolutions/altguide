@@ -49,9 +49,9 @@ def board_option_check(options):
             "Подробней тут https://www.rezonit.ru/directory/v-pomoshch-konstruktoru/kharakteristiki-finishnykh-pokrytiy/")
         raise SystemExit(1)
     pcb_color = board_opt.get('pcb_color')
-    if pcb_color is None or not (pcb_color == "black" or pcb_color == "green" or pcb_color == "blue"):
+    if pcb_color is None or not (pcb_color == "black" or pcb_color == "green" or pcb_color == "blue" or pcb_color == "red"):
         print("Поле 'pcb_color' отсутсвует или содержит неверное значение   ")
-        print("Возможные варианты 'black' / 'green' / 'blue'")
+        print("Возможные варианты 'black' / 'green' / 'blue' / 'red' ")
         raise SystemExit(1)
     overlay_color = board_opt.get('overlay_color')
     if overlay_color is None or not overlay_color == 'white':
@@ -71,12 +71,20 @@ def board_option_check(options):
         print("Возможные варианты 18 / 35 / 70 / 105 ")
         raise SystemExit(1)
     solder_point = board_opt.get("solder_point")
-    if solder_point is None or (solder_point < 30 or solder_point > 4000):
+    if solder_point is None or (solder_point < 1 or solder_point > 4000):
         print("Поле 'solder_point' отсутсвует или содержит неверное значение   ")
         raise SystemExit(1)
     ext_bom = board_opt.get("ext_bom")
     if ext_bom is None:
         print("Поле 'ext_bom' отсутсвует или содержит неверное значение")
+        raise SystemExit(1)
+    ext_bom = board_opt.get("length")
+    if ext_bom is None:
+        print("Поле 'length' отсутсвует или содержит неверное значение")
+        raise SystemExit(1)
+    ext_bom = board_opt.get("width")
+    if ext_bom is None:
+        print("Поле 'width' отсутсвует или содержит неверное значение")
         raise SystemExit(1)
     file.close()
 
