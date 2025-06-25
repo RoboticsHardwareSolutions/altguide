@@ -80,7 +80,7 @@ def pcb_folder_draftsman(pcb_list):
         pcb_list.remove("Draftsman.PDF")
     except ValueError:
         print("Файл Draftsman.PDF отсутствует в /doc/pcb/ ")
-        # raise SystemExit(1)
+        raise SystemExit(1)
 
 
 def doc_pcb_folder_check(doc_pcb):
