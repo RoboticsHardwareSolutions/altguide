@@ -1,4 +1,6 @@
-# rcan-usb-hardware 
+# Tamplate of README.md
+```md
+# <Name of project>
 
 ## Documentation:
 [all documentation files](doc/pcb/)<br>
@@ -10,11 +12,4 @@
 ![pinout](doc/pinout/pinout.png)<br>
 ![top](doc/photo/top.png)<br>
 ![top](doc/photo/bot.png)
-
-
-
-
-
-
-
-
+```
