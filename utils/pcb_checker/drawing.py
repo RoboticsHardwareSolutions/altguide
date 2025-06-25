@@ -14,6 +14,7 @@ def doc_drawing_check(drawing):
     found = False
     drawing_list = os.listdir(drawing)
     delete_if_found(drawing_list, '.DS_Store')
+    delete_if_found(drawing_list, 'Status Report.Txt')
     for i in drawing_list:
         if i.find(".step") > 1 or i.find(".STEP") > 1 or i.find(".STP") > 1 or i.find(".stp"):
             found = True

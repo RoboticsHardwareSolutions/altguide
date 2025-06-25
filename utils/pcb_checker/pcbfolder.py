@@ -12,6 +12,7 @@ def pcbdoc_delete_if_found(doc_list, name):
 def pcb_list_checker_trash(pcb_list):
     pcbdoc_delete_if_found(pcb_list, 'board_options_draw.png')
     pcbdoc_delete_if_found(pcb_list, '.DS_Store')
+    pcbdoc_delete_if_found(pcb_list, 'Status Report.Txt')
     pcbdoc_delete_if_found(pcb_list, "ext_bom.csv")
     if len(pcb_list) != 0:
         print("В папке /doc/pcb/  репозитория содержится 'мусор' :")
@@ -71,6 +72,15 @@ def pcb_folder_assembly_drawings(pcb_list):
     except ValueError:
         print("Файл Assembly Drawings.PDF отсутствует в /doc/pcb/ ")
         raise SystemExit(1)
+    
+
+def pcb_folder_draftsman(pcb_list):
+    try:
+        pcb_list.index("Draftsman.PDF")
+        pcb_list.remove("Draftsman.PDF")
+    except ValueError:
+        print("Файл Draftsman.PDF отсутствует в /doc/pcb/ ")
+        # raise SystemExit(1)
 
 
 def doc_pcb_folder_check(doc_pcb):
@@ -81,6 +91,7 @@ def doc_pcb_folder_check(doc_pcb):
     pcb_folder_bom(doc_pcb)
     pcb_folder_pick_place(doc_pcb)
     pcb_folder_board_options(doc_pcb)
+    pcb_folder_draftsman(doc_pcb)
     pcb_list_checker_trash(doc_pcb)
 
 

@@ -24,6 +24,7 @@ def photo_list_checker_trash(photo_list):
     delete_photo_if_found(photo_list, '.DS_Store')
     photo_list.remove("top.png")
     photo_list.remove("bot.png")
+    photo_list.remove('Status Report.Txt')
     if len(photo_list) != 0:
         print("В папке /doc/photo/ репозитория содержится 'мусор' :")
         print(photo_list)
