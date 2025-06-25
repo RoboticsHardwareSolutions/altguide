@@ -94,6 +94,11 @@ def board_option_check(options):
     if ext_bom is None:
         print("Поле 'width' отсутсвует или содержит неверное значение")
         raise SystemExit(1)
+    drill_file_check = board_opt.get("drill_file_check")
+    if drill_file_check is not None: # делает существование этого поля в файле необязательным
+        if not isinstance(drill_file_check, bool):
+            print("Поле 'drill_file_check' содержит неверное значение (ожидается 'true' или 'false')")
+            raise SystemExit(1)
     file.close()
 
 
