@@ -23,6 +23,14 @@ def board_option_check(options):
     if board_opt is None:
         print("В файле остуствует строка [board_options]  или содержит ошибки ")
         raise SystemExit(1)
+    board_length = board_opt.get("length")
+    if board_length is None or not isinstance(board_length, (int, float)):
+        print("Поле 'length' отсутсвует или содержит неверное значение (ожидается число)")
+        raise SystemExit(1)
+    board_width = board_opt.get("width")
+    if board_width is None or not isinstance(board_width, (int, float)):
+        print("Поле 'width' отсутсвует или содержит неверное значение (ожидается число)")
+        raise SystemExit(1)
     board_type = board_opt.get("type")
     if board_type is None or not ((board_type == "typical") or (board_type == "custom")):
         print("Поле 'type' отсутсвует или содердит ошибки (возможные варианты значений 'typical' и 'custom' )")
