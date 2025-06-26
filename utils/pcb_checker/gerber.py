@@ -73,12 +73,15 @@ def check_other_layers(file_list, layers):
         raise SystemExit(1)
 
 
-def gerber_check(gerber, board_option):
+def gerber_check(gerber, board_option: tomli):
     board_option = get_board_option_dict(board_option)
     gerber_list = os.listdir(gerber)
     check_cooper_layers(gerber_list, board_option.get("layers"))
     check_other_layers(gerber_list, board_option.get("layers"))
-    check_drill(gerber_list, board_option.get("layers"))
+
+    check_file_drill = board_option.get("drill_file_check")
+    if check_file_drill is None or check_file_drill is True:
+        check_drill(gerber_list, board_option.get("layers"))
     # try:
     #     gerber_list.index("board_option_draw.png")
     # except ValueError:

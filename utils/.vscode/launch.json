@@ -1,0 +1,67 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "debugpy",
+      "request": "launch",
+      "name": "Run main.py (root)",
+      "program": "${workspaceFolder}/main.py"
+    },
+    {
+      "type": "debugpy",
+      "request": "launch",
+      "name": "Run pcb_checker/main.py",
+      "program": "${workspaceFolder}/pcb_checker/main.py",
+      "args": [
+        "${input:vaultPath}"
+      ]
+    },
+    {
+      "type": "debugpy",
+      "request": "launch",
+      "name": "Run pcb_outcomes/main.py",
+      "program": "${workspaceFolder}/pcb_outcomes/main.py",
+      "args": [
+        "${input:vaultPath}",
+        "${input:specFolder}",
+        "${input:saveToFolder}"
+      ]
+    },
+    {
+      "type": "debugpy",
+      "request": "launch",
+      "name": "Run pcb_specgen/main.py",
+      "program": "${workspaceFolder}/pcb_specgen/main.py",
+      "args": [
+        "${input:vaultPath}",
+        "${input:saveToFolder}"
+      ]
+    },
+    {
+      "type": "debugpy",
+      "request": "launch",
+      "name": "Run low_name/main.py",
+      "program": "${workspaceFolder}/low_name/main.py",
+      "args": [
+        "${input:vaultPath}"
+      ]
+    }
+  ],
+  "inputs": [
+    {
+      "id": "vaultPath",
+      "type": "promptString",
+      "description": "Enter the path to the vault directory"
+    },
+    {
+      "id": "specFolder",
+      "type": "promptString",
+      "description": "Enter the path to the spec folder"
+    },
+    {
+      "id": "saveToFolder",
+      "type": "promptString",
+      "description": "Enter the path to the save-to folder"
+    }
+  ]
+}
