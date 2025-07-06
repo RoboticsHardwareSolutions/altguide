@@ -20,13 +20,13 @@ def get_row(rows, name):
 
 
 def ext_bom_check_part(rows):
-    row = get_row(rows, "Part Number")
+    row = get_row(rows, "Part")
     if len(rows) < 2:
         print(" В таблице bom не хватает данных")
         raise SystemExit(1)
     for i in range(1, len(rows)):
         if rows[i][row] == "" or rows[i][row] == " " or rows[i][row] == "M3" or rows[i][row] == "M4":
-            print(" В таблице ext_bom есть незаполненные поля Part Number")
+            print(" В таблице ext_bom есть незаполненные поля Part")
             raise SystemExit(1)
 
 
@@ -53,7 +53,7 @@ def ext_bom_check_headers(rows):
     ok = 5
     if rows[0][0] == "Connect to":
         ok -= 1
-    if rows[0][1] == "Part Number":
+    if rows[0][1] == "Part":
         ok -= 1
     if rows[0][2] == "Alternative Part":
         ok -= 1

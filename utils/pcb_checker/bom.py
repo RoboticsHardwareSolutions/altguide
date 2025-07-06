@@ -19,13 +19,13 @@ def get_row(rows, name):
 
 
 def bom_check_part(rows): # TODO бывают просто платы без компонент добавить такой вариант
-    row = get_row(rows, "Part Number")
+    row = get_row(rows, "Part")
     if len(rows) < 2:
         print(" В таблице bom не хватает данных")
         raise SystemExit(1)
     for i in range(1, len(rows)):
         if rows[i][row] == "" or rows[i][row] == " " or rows[i][row] == "M3" or rows[i][row] == "M4":
-            print(" В таблице bom есть незаполненные поля Part Number")
+            print(" В таблице bom есть незаполненные поля Part")
             raise SystemExit(1)
 
 
@@ -67,7 +67,7 @@ def bom_check_headers(rows):
         ok -= 1
     if rows[0][3] == "Footprint":
         ok -= 1
-    if rows[0][4] == "Part Number":
+    if rows[0][4] == "Part":
         ok -= 1
     if rows[0][5] == "Alternative Part":
         ok -= 1
@@ -76,7 +76,7 @@ def bom_check_headers(rows):
     if ok != 0:
         print(" В таблице с bom содержатся неверные названия заголовков столбцов")
         print(
-            "Требуемые : 'Description', 'Comment', 'Designator', 'Footprint', 'Part Number', 'Alternative Part', 'Quantity' ")
+            "Требуемые : 'Description', 'Comment', 'Designator', 'Footprint', 'Part', 'Alternative Part', 'Quantity' ")
         raise SystemExit(1)
 
 
