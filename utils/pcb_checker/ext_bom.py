@@ -64,7 +64,7 @@ def ext_bom_check_headers(rows):
     if ok != 0:
         print(" В таблице ext_bom.csv содержатся неверные названия заголовков столбцов")
         print(
-            "Требуемые : 'Connect to', 'Part Number', 'Alternative Part', 'Comment', 'Quantity'")
+            "Требуемые : 'Connect to', 'Part', 'Alternative Part', 'Comment', 'Quantity'")
         raise SystemExit(1)
 
 

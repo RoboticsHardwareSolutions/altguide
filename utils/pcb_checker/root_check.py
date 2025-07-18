@@ -45,10 +45,9 @@ def delete_if_found(root_list, name):
 def files_list_checker_trash(root_list):
     root_list.remove("doc")
     root_list.remove(".gitignore")
-    root_list.remove(".github")
     root_list.remove("README.md")
     root_list.remove("hardware")
-    # root_list.remove('.gitlab-ci.yml')
+    delete_if_found(root_list, ".github")
     delete_if_found(root_list, '.git')
     delete_if_found(root_list, '.DS_Store')
     delete_if_found(root_list, 'simulation')
