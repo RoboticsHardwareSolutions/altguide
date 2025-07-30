@@ -32,17 +32,18 @@ This repository contains automated workflows for generating project templates. T
 
 ## 📂 Local Storage System
 
-Both workflows now use local storage on self-hosted runners:
+Both workflows now use local storage in the workspace directory:
 
-- **Storage Location:** `/home/runner/template-storage/`
+- **Storage Location:** `./template-storage/` (relative to workspace root)
 - **File Permissions:** 644 (readable by all users)
-- **Retention:** Managed locally (no automatic cleanup)
+- **Retention:** Managed locally within the workspace
 
 **Advantages:**
 - ⚡ Faster access to generated templates
 - 💾 No GitHub storage quota limitations
 - 🔧 Better control over file management
-- 🏃‍♂️ Optimized for self-hosted runner environment
+- 🏃‍♂️ Accessible from workspace directory
+- 🔒 No special permissions required
 
 ## 📁 What's included in templates
 
@@ -88,9 +89,9 @@ gh workflow run custom-template.yml \
 
 ## 📦 Accessing generated templates
 
-Templates are stored locally on the self-hosted runner:
+Templates are stored locally in the workspace:
 
-**File Location:** `/home/runner/template-storage/[template-name].[format]`
+**File Location:** `./template-storage/[template-name].[format]`
 
 **Available Formats:**
 - `[template-name].zip` - ZIP archive format
@@ -134,8 +135,8 @@ Workflows automatically:
 4. Check runner permissions for `/home/runner/template-storage/`
 
 **Common issues:**
-- **Storage space**: Clean up old templates from `/home/runner/template-storage/`
-- **Permissions**: Ensure runner can write to storage directory
+- **Storage space**: Clean up old templates from `./template-storage/`
+- **Permissions**: Ensure runner can write to workspace directory
 - **Network**: Verify repository access for sparse checkout
 
 For questions or issues, please create an Issue in this repository.

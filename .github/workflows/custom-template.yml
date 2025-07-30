@@ -111,20 +111,20 @@ jobs:
           
       - name: Save templates locally
         run: |
-          # Create local storage directory if it doesn't exist
-          mkdir -p /home/runner/template-storage
+          # Create local storage directory in the workspace
+          mkdir -p ./template-storage
           
           # Move archives to local storage based on format
           if [ "${{ inputs.template_format }}" = "zip" ] || [ "${{ inputs.template_format }}" = "both" ]; then
-            mv "${{ steps.template_name.outputs.name }}.zip" /home/runner/template-storage/
-            chmod 644 "/home/runner/template-storage/${{ steps.template_name.outputs.name }}.zip"
-            echo "ZIP template saved to: /home/runner/template-storage/${{ steps.template_name.outputs.name }}.zip"
+            mv "${{ steps.template_name.outputs.name }}.zip" ./template-storage/
+            chmod 644 "./template-storage/${{ steps.template_name.outputs.name }}.zip"
+            echo "ZIP template saved to: $(pwd)/template-storage/${{ steps.template_name.outputs.name }}.zip"
           fi
           
           if [ "${{ inputs.template_format }}" = "tar.gz" ] || [ "${{ inputs.template_format }}" = "both" ]; then
-            mv "${{ steps.template_name.outputs.name }}.tar.gz" /home/runner/template-storage/
-            chmod 644 "/home/runner/template-storage/${{ steps.template_name.outputs.name }}.tar.gz"
-            echo "TAR.GZ template saved to: /home/runner/template-storage/${{ steps.template_name.outputs.name }}.tar.gz"
+            mv "${{ steps.template_name.outputs.name }}.tar.gz" ./template-storage/
+            chmod 644 "./template-storage/${{ steps.template_name.outputs.name }}.tar.gz"
+            echo "TAR.GZ template saved to: $(pwd)/template-storage/${{ steps.template_name.outputs.name }}.tar.gz"
           fi
           
       - name: Generate summary
@@ -144,9 +144,9 @@ jobs:
           
           # Display file paths based on format
           if [ "${{ inputs.template_format }}" = "zip" ] || [ "${{ inputs.template_format }}" = "both" ]; then
-            echo "- **ZIP template saved to:** /home/runner/template-storage/${{ steps.template_name.outputs.name }}.zip" >> $GITHUB_STEP_SUMMARY
+            echo "- **ZIP template saved to:** $(pwd)/template-storage/${{ steps.template_name.outputs.name }}.zip" >> $GITHUB_STEP_SUMMARY
           fi
           
           if [ "${{ inputs.template_format }}" = "tar.gz" ] || [ "${{ inputs.template_format }}" = "both" ]; then
-            echo "- **TAR.GZ template saved to:** /home/runner/template-storage/${{ steps.template_name.outputs.name }}.tar.gz" >> $GITHUB_STEP_SUMMARY
+            echo "- **TAR.GZ template saved to:** $(pwd)/template-storage/${{ steps.template_name.outputs.name }}.tar.gz" >> $GITHUB_STEP_SUMMARY
           fi
