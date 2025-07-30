@@ -1,0 +1,93 @@
+name: Quick Template Download
+
+on:
+  workflow_dispatch:
+    inputs:
+      template_name:
+        description: 'Template name (e.g., MyProject)'
+        required: false
+        default: 'rhs-altium-template'
+        type: string
+      include_altlib:
+        description: 'Include altlib directory'
+        required: false
+        default: true
+        type: boolean
+
+jobs:
+  create-quick-template:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        
+      - name: Get current date
+        id: date
+        run: echo "date=$(date +'%Y%m%d-%H%M')" >> $GITHUB_OUTPUT
+        
+      - name: Create template directory
+        run: |
+          mkdir -p "${{ inputs.template_name }}"
+          
+      - name: Copy template files
+        run: |
+          # Copy all files from files directory
+          cp -r files/* "${{ inputs.template_name }}/"
+          
+          # Copy altlib if requested
+          if [ "${{ inputs.include_altlib }}" = "true" ]; then
+            cp -r altlib "${{ inputs.template_name }}/"
+          fi
+          
+          # Copy documentation
+          cp altguide.md "${{ inputs.template_name }}/PROJECT_SETUP_GUIDE.md"
+          
+      - name: Create quick template README
+        run: |
+          cat > "${{ inputs.template_name }}/TEMPLATE_INFO.md" << 'EOF'
+          # RHS Altium Project Template
+          
+          **Project Name:** ${{ inputs.template_name }}
+          **Generated on:** ${{ steps.date.outputs.date }}
+          **Altlib included:** ${{ inputs.include_altlib }}
+          
+          ## Quick Setup:
+          1. Rename files for your project
+          2. Update README.md with project details  
+          3. Configure .github/workflows as needed
+          4. Start developing!
+          
+          For detailed instructions see PROJECT_SETUP_GUIDE.md
+          EOF
+          
+      - name: Create template archive
+        run: |
+          zip -r "${{ inputs.template_name }}-${{ steps.date.outputs.date }}.zip" "${{ inputs.template_name }}/"
+          
+      - name: Upload template artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ inputs.template_name }}-${{ steps.date.outputs.date }}
+          path: ${{ inputs.template_name }}-${{ steps.date.outputs.date }}.zip
+          retention-days: 1
+          
+      - name: Add download link to summary
+        run: |
+          echo "## 📦 Template Created Successfully!" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Template Name:** ${{ inputs.template_name }}-${{ steps.date.outputs.date }}" >> $GITHUB_STEP_SUMMARY
+          echo "**Project Name:** ${{ inputs.template_name }}" >> $GITHUB_STEP_SUMMARY
+          echo "**Altlib Included:** ${{ inputs.include_altlib }}" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### 📥 Download:" >> $GITHUB_STEP_SUMMARY
+          echo "Go to the Actions tab → This workflow run → Artifacts section" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### 🔧 Contents:" >> $GITHUB_STEP_SUMMARY
+          echo "- Altium PCB template" >> $GITHUB_STEP_SUMMARY
+          echo "- GitHub Actions workflows" >> $GITHUB_STEP_SUMMARY  
+          echo "- Documentation templates" >> $GITHUB_STEP_SUMMARY
+          echo "- Board options and BOM templates" >> $GITHUB_STEP_SUMMARY
+          if [ "${{ inputs.include_altlib }}" = "true" ]; then
+            echo "- RHS component libraries" >> $GITHUB_STEP_SUMMARY
+          fi

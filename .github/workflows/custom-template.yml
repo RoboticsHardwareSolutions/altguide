@@ -1,0 +1,200 @@
+name: Custom Template Builder
+
+on:
+  workflow_dispatch:
+    inputs:
+      project_name:
+        description: 'Project name (optional - will customize template)'
+        required: false
+        type: string
+      include_altlib:
+        description: 'Include altlib directory'
+        required: false
+        default: false
+        type: boolean
+      include_workflows:
+        description: 'Include GitHub Actions workflows'
+        required: false
+        default: true
+        type: boolean
+      include_docs:
+        description: 'Include documentation templates'
+        required: false
+        default: true
+        type: boolean
+      template_format:
+        description: 'Output format'
+        required: true
+        default: 'zip'
+        type: choice
+        options:
+        - zip
+        - tar.gz
+        - both
+
+jobs:
+  build-custom-template:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        
+      - name: Get timestamp
+        id: timestamp
+        run: echo "timestamp=$(date +'%Y%m%d-%H%M%S')" >> $GITHUB_OUTPUT
+        
+      - name: Set template name
+        id: template_name
+        run: |
+          if [ -n "${{ inputs.project_name }}" ]; then
+            echo "name=${{ inputs.project_name }}-template" >> $GITHUB_OUTPUT
+          else
+            echo "name=rhs-altium-template-${{ steps.timestamp.outputs.timestamp }}" >> $GITHUB_OUTPUT
+          fi
+          
+      - name: Create template directory
+        run: |
+          mkdir -p "${{ steps.template_name.outputs.name }}"
+          
+      - name: Copy core files
+        run: |
+          # Always copy basic PCB files
+          cp files/PCB.PcbDoc "${{ steps.template_name.outputs.name }}/"
+          cp files/Job.OutJob "${{ steps.template_name.outputs.name }}/"
+          cp files/board_options.txt "${{ steps.template_name.outputs.name }}/"
+          cp files/ext_bom.csv "${{ steps.template_name.outputs.name }}/"
+          
+          # Copy gitignore
+          if [ -f files/.gitignore.gitignore ]; then
+            cp files/.gitignore.gitignore "${{ steps.template_name.outputs.name }}/.gitignore"
+          fi
+          
+      - name: Copy GitHub workflows
+        if: inputs.include_workflows == true
+        run: |
+          mkdir -p "${{ steps.template_name.outputs.name }}/.github"
+          cp -r files/.github/* "${{ steps.template_name.outputs.name }}/.github/"
+          
+      - name: Copy altlib
+        if: inputs.include_altlib == true
+        run: |
+          cp -r altlib "${{ steps.template_name.outputs.name }}/"
+          
+      - name: Copy documentation
+        if: inputs.include_docs == true
+        run: |
+          cp altguide.md "${{ steps.template_name.outputs.name }}/PROJECT_SETUP_GUIDE.md"
+          
+      - name: Create customized README
+        run: |
+          PROJECT_NAME="${{ inputs.project_name }}"
+          if [ -z "$PROJECT_NAME" ]; then
+            PROJECT_NAME="Your Project Name"
+          fi
+          
+          cat > "${{ steps.template_name.outputs.name }}/README.md" << EOF
+          # $PROJECT_NAME
+          
+          ## Documentation:
+          [all documentation files](doc/pcb/)<br>
+          [schematic](<doc/pcb/Schematic Prints.PDF>)<br>
+          [assembly drawings](<doc/pcb/Assembly Drawings.PDF>)<br>
+          [board options](doc/pcb/board_options.txt)
+          
+          ## Pinout and PCB image
+          ![pinout](doc/pinout/pinout.png)<br>
+          ![top](doc/photo/top.png)<br>
+          ![bottom](doc/photo/bot.png)
+          
+          ## Development
+          
+          This project was created using the RHS Altium template.
+          
+          ### Project Structure
+          - \`PCB.PcbDoc\` - Main PCB design file
+          - \`Job.OutJob\` - Output job configuration
+          - \`board_options.txt\` - Manufacturing specifications
+          - \`ext_bom.csv\` - External BOM template
+          EOF
+          
+          if [ "${{ inputs.include_altlib }}" = "true" ]; then
+            echo "- \`altlib/\` - RHS component libraries" >> "${{ steps.template_name.outputs.name }}/README.md"
+          fi
+          
+          if [ "${{ inputs.include_workflows }}" = "true" ]; then
+            echo "- \`.github/workflows/\` - CI/CD workflows" >> "${{ steps.template_name.outputs.name }}/README.md"
+          fi
+          
+          cat >> "${{ steps.template_name.outputs.name }}/README.md" << 'EOF'
+          
+          ### Getting Started
+          1. Open PCB.PcbDoc in Altium Designer
+          2. Configure your schematic and PCB layout
+          3. Update board_options.txt with your specifications
+          4. Use Job.OutJob to generate manufacturing files
+          
+          ### Support
+          For template issues: https://github.com/RoboticsHardwareSolutions/altguide
+          EOF
+          
+      - name: Create template info file
+        run: |
+          cat > "${{ steps.template_name.outputs.name }}/TEMPLATE_INFO.txt" << EOF
+          RHS Altium Project Template
+          ===========================
+          
+          Generated: ${{ steps.timestamp.outputs.timestamp }}
+          Template Name: ${{ steps.template_name.outputs.name }}
+          
+          Included Components:
+          - Core PCB files: ✓
+          - GitHub workflows: ${{ inputs.include_workflows == 'true' && '✓' || '✗' }}
+          - RHS libraries: ${{ inputs.include_altlib == 'true' && '✓' || '✗' }}
+          - Documentation: ${{ inputs.include_docs == 'true' && '✓' || '✗' }}
+          
+          Project Name: ${{ inputs.project_name || 'Not specified' }}
+          EOF
+          
+      - name: Create ZIP archive
+        if: inputs.template_format == 'zip' || inputs.template_format == 'both'
+        run: |
+          zip -r "${{ steps.template_name.outputs.name }}.zip" "${{ steps.template_name.outputs.name }}/"
+          
+      - name: Create TAR.GZ archive  
+        if: inputs.template_format == 'tar.gz' || inputs.template_format == 'both'
+        run: |
+          tar -czf "${{ steps.template_name.outputs.name }}.tar.gz" "${{ steps.template_name.outputs.name }}/"
+          
+      - name: Upload ZIP artifact
+        if: inputs.template_format == 'zip' || inputs.template_format == 'both'
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ steps.template_name.outputs.name }}-zip
+          path: ${{ steps.template_name.outputs.name }}.zip
+          retention-days: 1
+          
+      - name: Upload TAR.GZ artifact
+        if: inputs.template_format == 'tar.gz' || inputs.template_format == 'both'  
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ steps.template_name.outputs.name }}-tar-gz
+          path: ${{ steps.template_name.outputs.name }}.tar.gz
+          retention-days: 1
+          
+      - name: Generate summary
+        run: |
+          echo "## 🎉 Custom Template Built Successfully!" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Template Name:** \`${{ steps.template_name.outputs.name }}\`" >> $GITHUB_STEP_SUMMARY
+          echo "**Generated:** ${{ steps.timestamp.outputs.timestamp }}" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### 📋 Configuration:" >> $GITHUB_STEP_SUMMARY
+          echo "- **Project Name:** ${{ inputs.project_name || 'Generic template' }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Include Libraries:** ${{ inputs.include_altlib }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Include Workflows:** ${{ inputs.include_workflows }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Include Docs:** ${{ inputs.include_docs }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Format:** ${{ inputs.template_format }}" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### 📥 Download:" >> $GITHUB_STEP_SUMMARY
+          echo "Check the **Artifacts** section below to download your custom template." >> $GITHUB_STEP_SUMMARY
