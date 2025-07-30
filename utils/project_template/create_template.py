@@ -42,9 +42,9 @@ class TemplateCreator:
         self.template_path = self.output_dir / self.template_dir
         
         # Source directories
-        self.files_dir = self.script_dir / "files"
-        self.altlib_dir = self.script_dir / "altlib"
-        self.guide_file = self.script_dir / "altguide.md"
+        self.files_dir = self.script_dir / "../../files"
+        self.altlib_dir = self.script_dir / "../../altlib"
+        self.guide_file = self.script_dir / "../../altguide.md"
         
     def validate_source_files(self):
         """Validate that required source files exist"""
