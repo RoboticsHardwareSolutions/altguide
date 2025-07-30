@@ -1,0 +1,86 @@
+name: Quick Template Download
+
+on:
+  workflow_dispatch:
+    inputs:
+      include_altlib:
+        description: 'Include altlib directory'
+        required: false
+        default: true
+        type: boolean
+
+jobs:
+  create-quick-template:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        
+      - name: Get current date
+        id: date
+        run: echo "date=$(date +'%Y%m%d-%H%M')" >> $GITHUB_OUTPUT
+        
+      - name: Create template directory
+        run: |
+          mkdir -p rhs-altium-template
+          
+      - name: Copy template files
+        run: |
+          # Copy all files from files directory
+          cp -r files/* rhs-altium-template/
+          
+          # Copy altlib if requested
+          if [ "${{ inputs.include_altlib }}" = "true" ]; then
+            cp -r altlib rhs-altium-template/
+          fi
+          
+          # Copy documentation
+          cp altguide.md rhs-altium-template/PROJECT_SETUP_GUIDE.md
+          
+      - name: Create quick template README
+        run: |
+          cat > rhs-altium-template/TEMPLATE_INFO.md << 'EOF'
+          # RHS Altium Project Template
+          
+          **Generated on:** ${{ steps.date.outputs.date }}
+          **Altlib included:** ${{ inputs.include_altlib }}
+          
+          ## Quick Setup:
+          1. Rename files for your project
+          2. Update README.md with project details  
+          3. Configure .github/workflows as needed
+          4. Start developing!
+          
+          For detailed instructions see PROJECT_SETUP_GUIDE.md
+          EOF
+          
+      - name: Create template archive
+        run: |
+          zip -r rhs-altium-template-${{ steps.date.outputs.date }}.zip rhs-altium-template/
+          
+      - name: Upload template artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: rhs-altium-template-${{ steps.date.outputs.date }}
+          path: rhs-altium-template-${{ steps.date.outputs.date }}.zip
+          retention-days: 7
+          
+      - name: Add download link to summary
+        run: |
+          echo "## 📦 Template Created Successfully!" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Template Name:** rhs-altium-template-${{ steps.date.outputs.date }}" >> $GITHUB_STEP_SUMMARY
+          echo "**Altlib Included:** ${{ inputs.include_altlib }}" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### 📥 Download:" >> $GITHUB_STEP_SUMMARY
+          echo "Go to the Actions tab → This workflow run → Artifacts section" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### 🔧 Contents:" >> $GITHUB_STEP_SUMMARY
+          echo "- Altium PCB template" >> $GITHUB_STEP_SUMMARY
+          echo "- GitHub Actions workflows" >> $GITHUB_STEP_SUMMARY  
+          echo "- Documentation templates" >> $GITHUB_STEP_SUMMARY
+          echo "- Board options and BOM templates" >> $GITHUB_STEP_SUMMARY
+          if [ "${{ inputs.include_altlib }}" = "true" ]; then
+            echo "- RHS component libraries" >> $GITHUB_STEP_SUMMARY
+          fi
