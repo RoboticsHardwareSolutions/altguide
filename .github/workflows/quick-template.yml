@@ -60,19 +60,12 @@ jobs:
         run: |
           zip -r "${{ inputs.template_name }}-${{ steps.date.outputs.date }}.zip" "${{ inputs.template_name }}/"
           
-      - name: Save template locally
-        run: |
-          # Create local storage directory in the workspace
-          mkdir -p ./template-storage
-          
-          # Move archive to local storage
-          mv "${{ inputs.template_name }}-${{ steps.date.outputs.date }}.zip" ./template-storage/
-          
-          # Set permissions
-          chmod 644 "./template-storage/${{ inputs.template_name }}-${{ steps.date.outputs.date }}.zip"
-          
-          # Log the location
-          echo "Template saved to: $(pwd)/template-storage/${{ inputs.template_name }}-${{ steps.date.outputs.date }}.zip"
+      - name: Upload template artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ inputs.template_name }}-${{ steps.date.outputs.date }}
+          path: ${{ inputs.template_name }}-${{ steps.date.outputs.date }}.zip
+          retention-days: 1
           
       - name: Add download link to summary
         run: |
@@ -82,8 +75,7 @@ jobs:
           echo "**Project Name:** ${{ inputs.template_name }}" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "### 📥 Download:" >> $GITHUB_STEP_SUMMARY
-          echo "Template saved locally on self-hosted runner:" >> $GITHUB_STEP_SUMMARY
-          echo "\`$(pwd)/template-storage/${{ inputs.template_name }}-${{ steps.date.outputs.date }}.zip\`" >> $GITHUB_STEP_SUMMARY
+          echo "**GitHub Artifacts:** Check the 'Artifacts' section below to download the template" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "### 🔧 Contents:" >> $GITHUB_STEP_SUMMARY
           echo "- Altium PCB template" >> $GITHUB_STEP_SUMMARY

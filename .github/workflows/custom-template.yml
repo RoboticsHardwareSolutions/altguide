@@ -109,23 +109,21 @@ jobs:
         run: |
           tar -czf "${{ steps.template_name.outputs.name }}.tar.gz" "${{ steps.template_name.outputs.name }}/"
           
-      - name: Save templates locally
-        run: |
-          # Create local storage directory in the workspace
-          mkdir -p ./template-storage
+      - name: Upload ZIP artifact
+        if: inputs.template_format == 'zip' || inputs.template_format == 'both'
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ steps.template_name.outputs.name }}-zip
+          path: ${{ steps.template_name.outputs.name }}.zip
+          retention-days: 1
           
-          # Move archives to local storage based on format
-          if [ "${{ inputs.template_format }}" = "zip" ] || [ "${{ inputs.template_format }}" = "both" ]; then
-            mv "${{ steps.template_name.outputs.name }}.zip" ./template-storage/
-            chmod 644 "./template-storage/${{ steps.template_name.outputs.name }}.zip"
-            echo "ZIP template saved to: $(pwd)/template-storage/${{ steps.template_name.outputs.name }}.zip"
-          fi
-          
-          if [ "${{ inputs.template_format }}" = "tar.gz" ] || [ "${{ inputs.template_format }}" = "both" ]; then
-            mv "${{ steps.template_name.outputs.name }}.tar.gz" ./template-storage/
-            chmod 644 "./template-storage/${{ steps.template_name.outputs.name }}.tar.gz"
-            echo "TAR.GZ template saved to: $(pwd)/template-storage/${{ steps.template_name.outputs.name }}.tar.gz"
-          fi
+      - name: Upload TAR.GZ artifact
+        if: inputs.template_format == 'tar.gz' || inputs.template_format == 'both'
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ steps.template_name.outputs.name }}-targz
+          path: ${{ steps.template_name.outputs.name }}.tar.gz
+          retention-days: 1
           
       - name: Generate summary
         run: |
@@ -141,12 +139,4 @@ jobs:
           echo "- **Format:** ${{ inputs.template_format }}" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "### 📥 Download:" >> $GITHUB_STEP_SUMMARY
-          
-          # Display file paths based on format
-          if [ "${{ inputs.template_format }}" = "zip" ] || [ "${{ inputs.template_format }}" = "both" ]; then
-            echo "- **ZIP template saved to:** $(pwd)/template-storage/${{ steps.template_name.outputs.name }}.zip" >> $GITHUB_STEP_SUMMARY
-          fi
-          
-          if [ "${{ inputs.template_format }}" = "tar.gz" ] || [ "${{ inputs.template_format }}" = "both" ]; then
-            echo "- **TAR.GZ template saved to:** $(pwd)/template-storage/${{ steps.template_name.outputs.name }}.tar.gz" >> $GITHUB_STEP_SUMMARY
-          fi
+          echo "**GitHub Artifacts:** Check the 'Artifacts' section below to download templates" >> $GITHUB_STEP_SUMMARY
