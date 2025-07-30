@@ -1,116 +1,155 @@
-# GitHub Workflows for Project Template Generation
+# Template Generation Workflows Guide
 
-This repository has two GitHub Actions workflows configured for creating project templates from files in the `files/` folder.
+This repository contains automated workflows for generating project templates. The workflows use GitHub Actions with self-hosted runners for local storage and optimal performance.
 
 ## 🚀 Available Workflows
 
-### 1. **Quick Template Download** (`quick-template.yml`) 
-Quick template creation for immediate download.
+### 1. Quick Template Generation (`quick-template.yml`)
+**Purpose:** Fast template creation with minimal configuration  
+**Trigger:** Manual (workflow_dispatch)  
+**Performance:** Optimized for speed using sparse checkout
 
-**How to use:**
-1. Go to `Actions` → `Quick Template Download`  
-2. Click `Run workflow`
-3. Choose whether to include altlib libraries (⚠️ optional, large files)
-4. Download archive from Artifacts section
+**Parameters:**
+- `template_name` (required): Name for your template output
 
-**Result:** Artifact available for download for 7 days
+**What it includes:**
+- All files from `files/` directory
+- Project documentation (`altguide.md`)
+- Creates both ZIP and TAR.GZ formats
 
-### 2. **Custom Template Builder** (`custom-template.yml`)
-Advanced template builder with customization options.
+### 2. Custom Template Generation (`custom-template.yml`)  
+**Purpose:** Advanced template builder with customization options  
+**Trigger:** Manual (workflow_dispatch)  
+**Performance:** Configurable with conditional file inclusion
 
-**How to use:**
-1. Go to `Actions` → `Custom Template Builder`
-2. Click `Run workflow`
-3. Configure parameters:
-   - **Project name** - project name (optional)
-   - **Include altlib** - include component libraries (⚠️ large files, increases build time)
-   - **Include workflows** - include GitHub Actions
-   - **Include docs** - include documentation
-   - **Template format** - archive format (ZIP/TAR.GZ/both)
+**Parameters:**
+- `template_name` (required): Name for your template output
+- `project_name` (optional): Custom project name for template
+- `project_type` (optional): Project type selection (electronics/software/mixed)
+- `include_workflows` (optional): Include workflow files (default: false)
+- `include_docs` (optional): Include documentation (default: true)
+- `template_format` (optional): Output format (zip/tar.gz/both, default: both)
 
-**Result:** Customized template in Artifacts
+## 📂 Local Storage System
 
-## 📁 What's included in the template
+Both workflows now use local storage on self-hosted runners:
 
-### Core files (always):
+- **Storage Location:** `/home/runner/template-storage/`
+- **File Permissions:** 644 (readable by all users)
+- **Retention:** Managed locally (no automatic cleanup)
+
+**Advantages:**
+- ⚡ Faster access to generated templates
+- 💾 No GitHub storage quota limitations
+- 🔧 Better control over file management
+- 🏃‍♂️ Optimized for self-hosted runner environment
+
+## 📁 What's included in templates
+
+### Core files (always included):
 - `PCB.PcbDoc` - Altium PCB template file
-- `Job.OutJob` - Output settings
+- `Job.OutJob` - Output job settings
 - `board_options.txt` - Board manufacturing options  
 - `ext_bom.csv` - External BOM template
-- `.gitignore` - Git settings
+- `altguide-check.yml` - GitHub Actions workflow
 
-### Optional components:
-- `altlib/` - RHS component libraries
-- `.github/workflows/` - CI/CD workflows
-- `PROJECT_SETUP_GUIDE.md` - Detailed setup guide
+### Optional components (custom template only):
+- `.github/workflows/` - Additional CI/CD workflows
+- Documentation files and guides
 
 ## 🔧 How to run workflows
 
 ### Via GitHub web interface:
 1. Open repository on GitHub
 2. Go to `Actions` tab
-3. Select needed workflow from the left list
+3. Select workflow from the left panel:
+   - `Quick Template Generation` - for fast standard templates
+   - `Custom Template Generation` - for customized templates
 4. Click `Run workflow` button
-5. Fill parameters and run
+5. Fill in required parameters:
+   - **Template name**: Choose a descriptive name for your template
+   - **Additional options**: Configure as needed (custom workflow only)
+6. Click `Run workflow` to start
 
 ### Via GitHub CLI:
 ```bash
 # Quick template
-gh workflow run quick-template.yml
+gh workflow run quick-template.yml \
+  -f template_name="MyProject-Template"
 
 # Custom template with parameters
 gh workflow run custom-template.yml \
+  -f template_name="MyProject-Custom" \
   -f project_name="MyProject" \
-  -f include_altlib=true \
+  -f project_type="electronics" \
+  -f include_workflows=true \
   -f template_format="zip"
+```
 
-## 📦 Downloading results
+## 📦 Accessing generated templates
 
-### From Artifacts:
-1. Open completed workflow run
-2. Scroll down to "Artifacts" section
-3. Download needed archive
+Templates are stored locally on the self-hosted runner:
 
-### From Releases:
-1. Go to `Releases` tab
-2. Find needed template version
-3. Download archive from Assets section
+**File Location:** `/home/runner/template-storage/[template-name].[format]`
+
+**Available Formats:**
+- `[template-name].zip` - ZIP archive format
+- `[template-name].tar.gz` - TAR.GZ archive format
+
+The workflow summary will display the exact file paths where templates are saved.
 
 ## ⚡ Performance Notes
 
-**Checkout optimization:**
-- 🚀 **Sparse checkout**: Only downloads needed files (`files/` directory and docs)
-- 📚 **Conditional altlib**: Downloads altlib only when explicitly requested
+**Optimization features:**
+- 🚀 **Sparse checkout**: Only downloads needed files (`files/` directory and documentation)
 - ⚡ **Shallow clone**: Uses `fetch-depth: 1` for faster downloads
+- 🏃‍♂️ **Self-hosted runners**: Local execution for better performance
+- � **Local storage**: Direct file system access without upload overhead
 
 **Build times:**
-- 📦 **Without altlib**: ~1-2 minutes, smaller archive (~50MB)
-- 📚 **With altlib**: ~3-5 minutes, larger archive (~500MB+)
+- � **Quick template**: ~30-60 seconds
+- 🎛️ **Custom template**: ~1-2 minutes (depending on options)
 
-**Recommendations:**
-- ✅ **For quick prototyping**: Leave altlib unchecked
-- ✅ **For production projects**: Include altlib if you need the component libraries
-- ✅ **For distribution**: Create separate templates with/without altlib
+## 💡 Usage recommendations
 
-## 💡 Usage tips
+1. **For rapid prototyping**: Use `Quick Template Generation`
+2. **For specific project needs**: Use `Custom Template Generation` with appropriate options
+3. **For team distribution**: Generate templates with descriptive names including version or date
 
-1. **For quick development** - use `Quick Template Download`
-2. **For customized projects** - use `Custom Template Builder`
-
-## 🔄 Automatic updates
+## 🔄 Template contents
 
 Workflows automatically:
-- Copy current files from `files/` directory (always downloaded)
-- Include current version of `altlib/` libraries (only if requested)
-- Generate correct documentation
-- Create archives in needed format
+- Copy all current files from `files/` directory
+- Include current project documentation
+- Generate templates in requested format(s)
+- Store templates locally for immediate access
 - Use optimized sparse checkout for faster performance
 
 ## 🐛 Troubleshooting
 
-If workflow fails:
-1. Check execution logs in Actions
-2. Ensure all files in `files/` are correct
-3. Check repository access permissions
+**If workflow fails:**
+1. Check execution logs in the Actions tab
+2. Verify all files in `files/` directory are accessible
+3. Ensure self-hosted runner has sufficient disk space
+4. Check runner permissions for `/home/runner/template-storage/`
 
-For questions create an Issue in this repository.
+**Common issues:**
+- **Storage space**: Clean up old templates from `/home/runner/template-storage/`
+- **Permissions**: Ensure runner can write to storage directory
+- **Network**: Verify repository access for sparse checkout
+
+For questions or issues, please create an Issue in this repository.
+
+## 📝 Local template creation
+
+For local development, you can also use the Python script:
+
+```bash
+# Create template locally
+python create_template.py --name "MyTemplate" --type electronics
+
+# Or use the wrapper script
+./create_template_wrapper.sh
+```
+
+This provides the same functionality as the workflows but runs entirely on your local machine.

@@ -8,11 +8,6 @@ on:
         required: false
         default: 'rhs-altium-template'
         type: string
-      include_altlib:
-        description: 'Include altlib directory (large files - increases build time)'
-        required: false
-        default: false
-        type: boolean
 
 jobs:
   create-quick-template:
@@ -27,22 +22,6 @@ jobs:
             files
             altguide.md
           sparse-checkout-cone-mode: false
-          
-      - name: Checkout altlib if needed
-        if: inputs.include_altlib == true
-        uses: actions/checkout@v4
-        with:
-          path: altlib-temp
-          fetch-depth: 1
-          sparse-checkout: |
-            altlib
-          sparse-checkout-cone-mode: false
-      
-      - name: Move altlib to correct location
-        if: inputs.include_altlib == true
-        run: |
-          mv altlib-temp/altlib ./altlib
-          rm -rf altlib-temp
         
       - name: Get current date
         id: date
@@ -57,11 +36,6 @@ jobs:
           # Copy all files from files directory
           cp -r files/* "${{ inputs.template_name }}/"
           
-          # Copy altlib if requested
-          if [ "${{ inputs.include_altlib }}" = "true" ]; then
-            cp -r altlib "${{ inputs.template_name }}/"
-          fi
-          
           # Copy documentation
           cp altguide.md "${{ inputs.template_name }}/PROJECT_SETUP_GUIDE.md"
           
@@ -72,7 +46,6 @@ jobs:
           
           **Project Name:** ${{ inputs.template_name }}
           **Generated on:** ${{ steps.date.outputs.date }}
-          **Altlib included:** ${{ inputs.include_altlib }}
           
           ## Quick Setup:
           1. Rename files for your project
@@ -87,12 +60,19 @@ jobs:
         run: |
           zip -r "${{ inputs.template_name }}-${{ steps.date.outputs.date }}.zip" "${{ inputs.template_name }}/"
           
-      - name: Upload template artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: ${{ inputs.template_name }}-${{ steps.date.outputs.date }}
-          path: ${{ inputs.template_name }}-${{ steps.date.outputs.date }}.zip
-          retention-days: 1
+      - name: Save template locally
+        run: |
+          # Create local storage directory if it doesn't exist
+          mkdir -p /home/runner/template-storage
+          
+          # Move archive to local storage
+          mv "${{ inputs.template_name }}-${{ steps.date.outputs.date }}.zip" /home/runner/template-storage/
+          
+          # Set permissions
+          chmod 644 "/home/runner/template-storage/${{ inputs.template_name }}-${{ steps.date.outputs.date }}.zip"
+          
+          # Log the location
+          echo "Template saved to: /home/runner/template-storage/${{ inputs.template_name }}-${{ steps.date.outputs.date }}.zip"
           
       - name: Add download link to summary
         run: |
@@ -100,16 +80,13 @@ jobs:
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "**Template Name:** ${{ inputs.template_name }}-${{ steps.date.outputs.date }}" >> $GITHUB_STEP_SUMMARY
           echo "**Project Name:** ${{ inputs.template_name }}" >> $GITHUB_STEP_SUMMARY
-          echo "**Altlib Included:** ${{ inputs.include_altlib }}" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "### 📥 Download:" >> $GITHUB_STEP_SUMMARY
-          echo "Go to the Actions tab → This workflow run → Artifacts section" >> $GITHUB_STEP_SUMMARY
+          echo "Template saved locally on self-hosted runner:" >> $GITHUB_STEP_SUMMARY
+          echo "\`/home/runner/template-storage/${{ inputs.template_name }}-${{ steps.date.outputs.date }}.zip\`" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "### 🔧 Contents:" >> $GITHUB_STEP_SUMMARY
           echo "- Altium PCB template" >> $GITHUB_STEP_SUMMARY
           echo "- GitHub Actions workflows" >> $GITHUB_STEP_SUMMARY  
           echo "- Documentation templates" >> $GITHUB_STEP_SUMMARY
           echo "- Board options and BOM templates" >> $GITHUB_STEP_SUMMARY
-          if [ "${{ inputs.include_altlib }}" = "true" ]; then
-            echo "- RHS component libraries" >> $GITHUB_STEP_SUMMARY
-          fi
