@@ -9,9 +9,9 @@ on:
         default: 'rhs-altium-template'
         type: string
       include_altlib:
-        description: 'Include altlib directory'
+        description: 'Include altlib directory (large files - increases build time)'
         required: false
-        default: true
+        default: false
         type: boolean
 
 jobs:
@@ -21,6 +21,28 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+          sparse-checkout: |
+            files
+            altguide.md
+          sparse-checkout-cone-mode: false
+          
+      - name: Checkout altlib if needed
+        if: inputs.include_altlib == true
+        uses: actions/checkout@v4
+        with:
+          path: altlib-temp
+          fetch-depth: 1
+          sparse-checkout: |
+            altlib
+          sparse-checkout-cone-mode: false
+      
+      - name: Move altlib to correct location
+        if: inputs.include_altlib == true
+        run: |
+          mv altlib-temp/altlib ./altlib
+          rm -rf altlib-temp
         
       - name: Get current date
         id: date
