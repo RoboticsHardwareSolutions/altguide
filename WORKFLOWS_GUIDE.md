@@ -4,19 +4,7 @@ This repository has three GitHub Actions workflows configured for creating proje
 
 ## 🚀 Available Workflows
 
-### 1. **Create Project Template** (`create-template.yml`)
-Creates an official release with a versioned project template.
-
-**How to use:**
-1. Go to `Actions` → `Create Project Template`
-2. Click `Run workflow`
-3. Specify template version (e.g., `v1.0.0`)
-4. Choose whether to include altlib libraries
-5. Workflow will create a release with template archives
-
-**Result:** Creates a GitHub Release with ZIP and TAR.GZ archives
-
-### 2. **Quick Template Download** (`quick-template.yml`) 
+### 1. **Quick Template Download** (`quick-template.yml`) 
 Quick template creation for immediate download.
 
 **How to use:**
@@ -27,7 +15,7 @@ Quick template creation for immediate download.
 
 **Result:** Artifact available for download for 7 days
 
-### 3. **Custom Template Builder** (`custom-template.yml`)
+### 2. **Custom Template Builder** (`custom-template.yml`)
 Advanced template builder with customization options.
 
 **How to use:**
@@ -76,12 +64,6 @@ gh workflow run custom-template.yml \
   -f project_name="MyProject" \
   -f include_altlib=true \
   -f template_format="zip"
-
-# Create release
-gh workflow run create-template.yml \
-  -f template_version="v1.0.0" \
-  -f include_altlib=true
-```
 
 ## 📦 Downloading results
 

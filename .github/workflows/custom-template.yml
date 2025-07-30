@@ -10,7 +10,7 @@ on:
       include_altlib:
         description: 'Include altlib directory'
         required: false
-        default: true
+        default: false
         type: boolean
       include_workflows:
         description: 'Include GitHub Actions workflows'
@@ -172,7 +172,7 @@ jobs:
         with:
           name: ${{ steps.template_name.outputs.name }}-zip
           path: ${{ steps.template_name.outputs.name }}.zip
-          retention-days: 30
+          retention-days: 1
           
       - name: Upload TAR.GZ artifact
         if: inputs.template_format == 'tar.gz' || inputs.template_format == 'both'  
@@ -180,7 +180,7 @@ jobs:
         with:
           name: ${{ steps.template_name.outputs.name }}-tar-gz
           path: ${{ steps.template_name.outputs.name }}.tar.gz
-          retention-days: 30
+          retention-days: 1
           
       - name: Generate summary
         run: |

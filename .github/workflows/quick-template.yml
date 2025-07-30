@@ -1,9 +1,13 @@
 name: Quick Template Download
 
-# Quick template creation workflow for immediate download
 on:
   workflow_dispatch:
     inputs:
+      template_name:
+        description: 'Template name (e.g., MyProject)'
+        required: false
+        default: 'rhs-altium-template'
+        type: string
       include_altlib:
         description: 'Include altlib directory'
         required: false
@@ -24,26 +28,27 @@ jobs:
         
       - name: Create template directory
         run: |
-          mkdir -p rhs-altium-template
+          mkdir -p "${{ inputs.template_name }}"
           
       - name: Copy template files
         run: |
           # Copy all files from files directory
-          cp -r files/* rhs-altium-template/
+          cp -r files/* "${{ inputs.template_name }}/"
           
           # Copy altlib if requested
           if [ "${{ inputs.include_altlib }}" = "true" ]; then
-            cp -r altlib rhs-altium-template/
+            cp -r altlib "${{ inputs.template_name }}/"
           fi
           
           # Copy documentation
-          cp altguide.md rhs-altium-template/PROJECT_SETUP_GUIDE.md
+          cp altguide.md "${{ inputs.template_name }}/PROJECT_SETUP_GUIDE.md"
           
       - name: Create quick template README
         run: |
-          cat > rhs-altium-template/TEMPLATE_INFO.md << 'EOF'
+          cat > "${{ inputs.template_name }}/TEMPLATE_INFO.md" << 'EOF'
           # RHS Altium Project Template
           
+          **Project Name:** ${{ inputs.template_name }}
           **Generated on:** ${{ steps.date.outputs.date }}
           **Altlib included:** ${{ inputs.include_altlib }}
           
@@ -58,20 +63,21 @@ jobs:
           
       - name: Create template archive
         run: |
-          zip -r rhs-altium-template-${{ steps.date.outputs.date }}.zip rhs-altium-template/
+          zip -r "${{ inputs.template_name }}-${{ steps.date.outputs.date }}.zip" "${{ inputs.template_name }}/"
           
       - name: Upload template artifact
         uses: actions/upload-artifact@v4
         with:
-          name: rhs-altium-template-${{ steps.date.outputs.date }}
-          path: rhs-altium-template-${{ steps.date.outputs.date }}.zip
-          retention-days: 7
+          name: ${{ inputs.template_name }}-${{ steps.date.outputs.date }}
+          path: ${{ inputs.template_name }}-${{ steps.date.outputs.date }}.zip
+          retention-days: 1
           
       - name: Add download link to summary
         run: |
           echo "## 📦 Template Created Successfully!" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
-          echo "**Template Name:** rhs-altium-template-${{ steps.date.outputs.date }}" >> $GITHUB_STEP_SUMMARY
+          echo "**Template Name:** ${{ inputs.template_name }}-${{ steps.date.outputs.date }}" >> $GITHUB_STEP_SUMMARY
+          echo "**Project Name:** ${{ inputs.template_name }}" >> $GITHUB_STEP_SUMMARY
           echo "**Altlib Included:** ${{ inputs.include_altlib }}" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "### 📥 Download:" >> $GITHUB_STEP_SUMMARY
