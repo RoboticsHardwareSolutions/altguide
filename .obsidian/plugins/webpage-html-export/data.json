@@ -157,7 +157,7 @@
       "allowResizing": true,
       "allowCollapsing": true,
       "rightDefaultWidth": "20em",
-      "leftDefaultWidth": "20em"
+      "leftDefaultWidth": "0"
     },
     "customHeadOptions": {
       "featureId": "custom-head",
