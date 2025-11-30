@@ -261,7 +261,7 @@ on: [push, pull_request]
 
 jobs:
   check:
-    runs-on: ubuntu-latest
+    runs-on: [self-hosted]
     steps:
 
       - name: Checkout altguide
@@ -270,26 +270,25 @@ jobs:
           repository: 'RoboticsHardwareSolutions/altguide'
           ref: 'main' 
           fetch-depth: 1
+          sparse-checkout: |
+            utils
 
       - name: Checkout target
         uses: actions/checkout@v4
         with:
           path: 'target'
 
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.11'
-
       - name: Install dependencies
         run: |
+          python3 -m venv venv
+          source venv/bin/activate
           python -m pip install --upgrade pip
           pip install -r utils/pcb_checker/requirements.txt
 
       - name: Run altguide script
         run: |
+          source venv/bin/activate
           python utils/pcb_checker/main.py "${{ github.workspace }}/target"
-
 ```
 
 ### Gitlub Actions 
