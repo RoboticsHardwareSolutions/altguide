@@ -292,6 +292,31 @@ jobs:
 
 ```
 
+### Gitlub Actions 
+
+В корне проекта создайте файл `.gitlab-ci.yml` с содержимым ниже:
+
+```yaml
+stages:
+  - check
+
+check:
+  stage: check
+  tags:
+    - baremetal
+  script:
+    - EXTERNAL_REPO_DIR=$(mktemp -d)
+    - git clone --depth 1 --filter=blob:none --sparse https://github.com/RoboticsHardwareSolutions/altguide.git "$EXTERNAL_REPO_DIR"
+    - cd "$EXTERNAL_REPO_DIR"
+    - git sparse-checkout set utils
+    - python3 -m venv venv
+    - source venv/bin/activate
+    - pip install -r utils/pcb_checker/requirements.txt
+    - python utils/pcb_checker/main.py "$CI_PROJECT_DIR"
+    - cd ..
+    - rm -rf "$EXTERNAL_REPO_DIR"
+```
+
 Готовую папку с файлом  который можно просто положить в корень репозитория находится в  [files/](https://github.com/RoboticsHardwareSolutions/altguide/tree/main/files)
 Далее после комита перейдите на вкладку Actions 
 
