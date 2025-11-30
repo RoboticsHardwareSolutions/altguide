@@ -9,9 +9,11 @@
     "makeHeadersTrees": true,
     "postProcess": true,
     "displayProgress": true,
-    "inlineHTML": true,
+    "inlineHTML": false,
     "exportPath": "/Users/doc/projects/rhs/altguide/docs",
-    "filesToExport": [],
+    "filesToExport": [
+      "altguide.md"
+    ],
     "useFallbackRenderer": false,
     "addBodyClasses": true,
     "addMathjaxStyles": true,
@@ -69,7 +71,7 @@
     "fileNavigationOptions": {
       "featureId": "file-navigation",
       "enabled": false,
-      "unavailable": true,
+      "unavailable": false,
       "alwaysEnabled": false,
       "hideSettingsButton": false,
       "featurePlacement": {
@@ -88,7 +90,7 @@
     "searchOptions": {
       "featureId": "search",
       "enabled": false,
-      "unavailable": true,
+      "unavailable": false,
       "alwaysEnabled": false,
       "hideSettingsButton": false,
       "featurePlacement": {
@@ -113,7 +115,7 @@
     },
     "themeToggleOptions": {
       "featureId": "theme-toggle",
-      "enabled": true,
+      "enabled": false,
       "unavailable": false,
       "alwaysEnabled": false,
       "hideSettingsButton": false,
@@ -126,7 +128,7 @@
     "graphViewOptions": {
       "featureId": "graph-view",
       "enabled": false,
-      "unavailable": true,
+      "unavailable": false,
       "alwaysEnabled": false,
       "hideSettingsButton": false,
       "featurePlacement": {
@@ -182,8 +184,8 @@
     },
     "rssOptions": {
       "featureId": "rss",
-      "enabled": false,
-      "unavailable": true,
+      "enabled": true,
+      "unavailable": false,
       "alwaysEnabled": false,
       "hideSettingsButton": false,
       "siteUrl": "",
@@ -199,15 +201,15 @@
     "relativeHeaderLinks": false,
     "includeJS": true,
     "includeCSS": true,
-    "inlineMedia": true,
-    "inlineCSS": true,
-    "inlineJS": true,
-    "inlineFonts": true,
-    "inlineOther": true,
+    "inlineMedia": false,
+    "inlineCSS": false,
+    "inlineJS": false,
+    "inlineFonts": false,
+    "inlineOther": false,
     "combineAsSingleFile": false,
     "offlineResources": false,
     "themeName": "",
-    "slugifyPaths": false,
+    "slugifyPaths": true,
     "flattenExportPaths": false,
     "fixLinks": true,
     "faviconPath": "",
@@ -223,7 +225,7 @@
   "rssDateProperty": "date",
   "onlyExportModified": true,
   "deleteOldFiles": true,
-  "exportPreset": "raw-documents",
+  "exportPreset": "online",
   "openAfterExport": true,
   "filePickerBlacklist": [
     "(^|\\/)node_modules\\/",
