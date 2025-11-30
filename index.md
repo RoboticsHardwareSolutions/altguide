@@ -185,8 +185,8 @@ PATH: "vault://files/board_options.txt"
 4. Когда файл будет сохранен, можно будет сгененрировать на его основе .pdf файл из [job.outjob](files/job.outjob)
 
 Пример:
-
 ![[Example_Draftsman.png]]
+
 
 ### Структура bom.csv
 
