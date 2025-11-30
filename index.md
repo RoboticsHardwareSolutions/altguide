@@ -176,7 +176,7 @@ PATH: "vault://files/board_options.txt"
 
 ![[gerber_layers.png]]
 
-### Draftsman.PDF
+### Файл  Draftsman.PDF
 
 **Создание файла**
 1. Кликаем правой кнопкой мыши по проекту `Add New to Project -> Draftsman Document`
@@ -185,7 +185,9 @@ PATH: "vault://files/board_options.txt"
 4. Когда файл будет сохранен, можно будет сгененрировать на его основе .pdf файл из [job.outjob](files/job.outjob)
 
 Пример:
-![[Example_Draftsman.png]]
+
+![[draftsman.png]]
+
 
 
 ### Структура bom.csv
