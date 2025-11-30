@@ -20,7 +20,7 @@
     "addHeadTag": true,
     "backlinkOptions": {
       "featureId": "backlinks",
-      "enabled": true,
+      "enabled": false,
       "unavailable": false,
       "alwaysEnabled": false,
       "hideSettingsButton": false,
@@ -193,7 +193,7 @@
     },
     "linkPreviewOptions": {
       "featureId": "link-preview",
-      "enabled": true,
+      "enabled": false,
       "unavailable": false,
       "alwaysEnabled": false,
       "hideSettingsButton": true
