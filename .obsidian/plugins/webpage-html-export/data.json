@@ -12,7 +12,7 @@
     "inlineHTML": false,
     "exportPath": "/Users/doc/projects/rhs/altguide/docs",
     "filesToExport": [
-      "altguide.md"
+      "index.md"
     ],
     "useFallbackRenderer": false,
     "addBodyClasses": true,
@@ -70,7 +70,7 @@
     },
     "fileNavigationOptions": {
       "featureId": "file-navigation",
-      "enabled": false,
+      "enabled": true,
       "unavailable": false,
       "alwaysEnabled": false,
       "hideSettingsButton": false,
@@ -89,7 +89,7 @@
     },
     "searchOptions": {
       "featureId": "search",
-      "enabled": false,
+      "enabled": true,
       "unavailable": false,
       "alwaysEnabled": false,
       "hideSettingsButton": false,
@@ -127,7 +127,7 @@
     },
     "graphViewOptions": {
       "featureId": "graph-view",
-      "enabled": false,
+      "enabled": true,
       "unavailable": false,
       "alwaysEnabled": false,
       "hideSettingsButton": false,
