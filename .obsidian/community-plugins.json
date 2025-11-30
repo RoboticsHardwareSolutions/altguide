@@ -2,7 +2,7 @@
   "obsidian-excalidraw-plugin",
   "webpage-html-export",
   "vscode-editor",
-  "obsidian-plugin-toc",
   "languagetool",
-  "automatic-table-of-contents"
+  "automatic-table-of-contents",
+  "embed-code-file"
 ]

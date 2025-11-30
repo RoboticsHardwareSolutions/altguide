@@ -22,6 +22,12 @@
     "excalidraw-css": "text",
     "excalidraw-autoexport": "text",
     "excalidraw-iframe-theme": "text",
-    "excalidraw-open-md": "checkbox"
+    "excalidraw-open-md": "checkbox",
+    "lt-language": "text",
+    "lt-picky": "checkbox",
+    "lt-autoCheck": "checkbox",
+    "lt-dictionary": "multitext",
+    "lt-disabledRules": "multitext",
+    "lt-disabledCategories": "multitext"
   }
 }

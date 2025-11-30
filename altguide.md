@@ -40,27 +40,14 @@
 ## Работа с проектом 
 ### Оформление репозитория с проектом 
 
- 
-Файлы истории и превью необходимо УДАЛИТЬ перед тем как делать комит для этого создать `.gitignore` файл. Пример такого файла в папке `files/`, содержимое файла ниже.
+Файлы истории и превью генерируемые Altium Designer  необходимо **УДАЛИТЬ** перед тем как делать комит для этого создать `.gitignore` файл в корне репозитория.  Пример такого файла в папке `files/`, содержимое файла ниже.
 
-```
-/hardware/__Previews/
-/doc/__Previews/
-/doc/drawing/Status Report.Txt
-/hardware/History/
-.read
-.open
-open
-read
-/hardware/Project Logs for *
-/hardware/Project Outputs for *
-Status Report*
-*Status Report.Txt
-*.bak
-*.bkp
+```embed-js
+PATH: "vault://files/example.gitignore"
 ```
 
-Готовый файл который можно просто положить в корень репозитория находится в  [files/.gitignore](https://github.com/RoboticsHardwareSolutions/altguide/tree/main/files)
+
+Готовый файл который можно просто положить в корень репозитория находится в  `files/example.gitignore`
 ### Название и назначение слоев в библиотеках и печатных платах
 
 В библиотеках xxx.pcblib и двухслойных печатных платах требуется соблюдать следующие слои:
@@ -153,57 +140,28 @@ Status Report*
 * `/hardware/` - содержит проект печатной платы `__.PrjPCB __.PcbDoc __.SchDoc` файлы.  (только файлы относящиеся к проекту. Файлы и папки истории бибилиотеки и прочий мусор не должны лежать в репозитории, CAM файлы и папки Preview , OutputLogs удалить).  
 ### Файл job
 
-Файл [job.outjob](files/job.outjob) - содержит готовый шаблон для генерации всех требуемый файлов докеументации автоматически, будьте внимательны требуется незначительное редактирование в каждом отдельном случае в зависимости от количества слоев печатной палаты и прочих параметров. Готовый файл который можно просто положить в корень репозитория находится в  [files/job](https://github.com/RoboticsHardwareSolutions/altguide/tree/main/files)
+Файл [job.outjob](files/job.outjob) - содержит готовый шаблон для генерации всех требуемый файлов докеументации автоматически, будьте внимательны требуется незначительное редактирование в каждом отдельном случае в зависимости от количества слоев печатной палаты и прочих параметров. Готовый файл который можно просто положить в корень репозитория находится в  `files/Job.OutJob`
 ### Файл mount_requirements
 
 **Пример файла** `mount_requirements` - иллюстрирует требования к  монтажу выводных элементов в составе печатной платы 
 ![[mount_requirements.png]]
 ###  Файл README 
 
-Файл [README.md](files/README.md) - который необходимо размещать в корне репозитория имеет типовое содержание и не нуждается в редактировании в случае использования типовой структуры репозитория. Скачать по сылке добавить в репозиторий - **нужно изменить только имя проекта** в большинстве случае если вы не хотите добавлять специфичную информацию.  Готовый файл который можно просто положить в корень репозитория находится в  [files/README](https://github.com/RoboticsHardwareSolutions/altguide/tree/main/files)
+Файл `files/README.md` - который необходимо размещать в корне репозитория имеет типовое содержание и не нуждается в редактировании в случае использования типовой структуры репозитория. Требуется лишь скачать файл и добавить в репозиторий - **обязательно изменить имя проекта в файле**. 
+
+Пример содержимого README
+```embed-js 
+PATH: "vault://files/README.md"
+```
+
+
 ###  Файл board_options
 
-Файл [board_options.txt](files/board_options.txt) - файл содержит пример необходимого описания структуры платы для заказа. Его содержимое также приведено ниже:
-
-```toml
-# в случае если плата не является типовой то поле type = "custom"
-# для этого в репозитории должен содержаться файл board_options_draw.png 
-# который иллюстрирует структуру и толщины слоев 
-
-
-[board_options]
-    length = 123               # длинна печатной платы по оси X в миллиметрах
-
-    width = 100                # ширина печатной платы по оси Y в миллиметрах 
-
-    type = "typical"           # тип печатной платы типовая или кастомная
-
-    layers = 2                 # количесвтво слоев
-
-    surface_finish = "ПОС63"   # покрытие контактных площадок
-
-    pcb_color = "black"        # цвет паяльной маски печатной платы
-
-    overlay_color = "white"    # цвет шелкографической маркировки
-
-    pcb_thickness = 1.5        # толщина в милиметрах
-
-    cooper_thickness = 35      # толщина меди в микрометрах
-
-    solder_point = 1254        # колличество точек пайки на случай ручного монтажа
-
-    drill_file_check = true    # Необязательное поле, по умолчанию true. Если
-                               # нет файла сверловки, то необходимо отключить
-                               # проверку этого файла. 
-                               # Файл сверловки не гененрирруется если нечего
-                               # сверлить!
-
-    ext_bom = true             # значение true или false в зависимости от того,
-                               # есть ли внешние коннекторы.
-	                           # Если есть то обязательно наличие файла
-	                           # ext_bom.csv с указанием доп фурнитуры 
-                                   
+Файл `files/board_options.txt` - файл содержит пример необходимого описания структуры платы для заказа. Его содержимое также приведено ниже:
+```embed-js 
+PATH: "vault://files/board_options.txt"
 ```
+
 
 Если сомневаетесь в синтаксической парвильности написания файла `board_options.txt` - поверьте с помощью онлайн валидатора [тут](https://www.toml-lint.com)    
 В ситуации когда плата не является типовой (изготавливается попарным пресованием или имеет не стандарнтные толщины ) требуется указать в поле type = "custom" и приложить в папку doc/pcb файл - `board_options_draw.png`. Пример такого файла ниже:
@@ -248,76 +206,29 @@ _Пример:_
 
 ## Автоматизированная проверка доекментации  - СI
 
-Ниже описывается проверка средствами github Action, по аналогии можно реализовать проверку в других git системах (gitlab). 
+Ниже описывается проверка средствами github Action / gitlab CI. 
 
 ### Github Actions 
 
 Создайте папки `.github/workflows`  и положите туда файл `altguide-check.yml` в своём проекте содержимое ниже:
 
-```yaml
-name: Altguide Check
-
-on: [push, pull_request]
-
-jobs:
-  check:
-    runs-on: [self-hosted]
-    steps:
-
-      - name: Checkout altguide
-        uses: actions/checkout@v4
-        with:
-          repository: 'RoboticsHardwareSolutions/altguide'
-          ref: 'main' 
-          fetch-depth: 1
-          sparse-checkout: |
-            utils
-
-      - name: Checkout target
-        uses: actions/checkout@v4
-        with:
-          path: 'target'
-
-      - name: Install dependencies
-        run: |
-          python3 -m venv venv
-          source venv/bin/activate
-          python -m pip install --upgrade pip
-          pip install -r utils/pcb_checker/requirements.txt
-
-      - name: Run altguide script
-        run: |
-          source venv/bin/activate
-          python utils/pcb_checker/main.py "${{ github.workspace }}/target"
+```embed-js 
+PATH: "vault://files/altguide-check.yml"
 ```
 
-### Gitlub Actions 
+### Gitlab Actions 
 
 В корне проекта создайте файл `.gitlab-ci.yml` с содержимым ниже:
 
-```yaml
-stages:
-  - check
-
-check:
-  stage: check
-  tags:
-    - baremetal
-  script:
-    - EXTERNAL_REPO_DIR=$(mktemp -d)
-    - git clone --depth 1 --filter=blob:none --sparse https://github.com/RoboticsHardwareSolutions/altguide.git "$EXTERNAL_REPO_DIR"
-    - cd "$EXTERNAL_REPO_DIR"
-    - git sparse-checkout set utils
-    - python3 -m venv venv
-    - source venv/bin/activate
-    - pip install -r utils/pcb_checker/requirements.txt
-    - python utils/pcb_checker/main.py "$CI_PROJECT_DIR"
-    - cd ..
-    - rm -rf "$EXTERNAL_REPO_DIR"
+```embed-js 
+PATH: "vault://files/example.gitlab-ci.yml"
 ```
 
-Готовую папку с файлом  который можно просто положить в корень репозитория находится в  [files/](https://github.com/RoboticsHardwareSolutions/altguide/tree/main/files)
-Далее после комита перейдите на вкладку Actions 
+
+### Проверка результата Github Actions
+
+- Готовую папку с файлом  который можно просто положить в корень репозитория находится в  `files`
+- Далее после комита перейдите на вкладку Actions 
 
 ![[Screenshot 2025-07-06 at 18.05.47.png]]
 
