@@ -21,43 +21,57 @@ def get_row(rows, name):
 def bom_check_part(rows): # TODO бывают просто платы без компонент добавить такой вариант
     row = get_row(rows, "Part")
     designator_row = get_row(rows, "Designator")
+    errors = []
     if len(rows) < 2:
         print(" В таблице bom не хватает данных")
         raise SystemExit(1)
     for i in range(1, len(rows)):
         if rows[i][row] == "" or rows[i][row] == " " or rows[i][row] == "M3" or rows[i][row] == "M4":
-            print(f" В таблице bom есть незаполненные поля Part в элементе: {rows[i][designator_row]}")
-            raise SystemExit(1)
+            errors.append(f" В таблице bom есть незаполненные поля Part в элементе: {rows[i][designator_row]}")
+    if errors:
+        for error in errors:
+            print(error)
+        raise SystemExit(1)
 
 
 def bom_check_description(rows):
     row = get_row(rows, "Description")
     designator_row = get_row(rows, "Designator")
+    errors = []
     for i in range(1, len(rows)):
         if rows[i][row] == "" or rows[i][row] == " ":
-            print(f" В таблице bom есть незаполненные поля Description в элементе: {rows[i][designator_row]}")
-            raise SystemExit(1)
+            errors.append(f" В таблице bom есть незаполненные поля Description в элементе: {rows[i][designator_row]}")
+    if errors:
+        for error in errors:
+            print(error)
+        raise SystemExit(1)
 
 
 def bom_check_footprint(rows):
     row = get_row(rows, "Footprint")
     designator_row = get_row(rows, "Designator")
+    errors = []
     for i in range(1, len(rows)):
         if rows[i][row] == "" or rows[i][row] == " ":
-            print(f" В таблице bom есть незаполненные поля Footprint в элементе: {rows[i][designator_row]}")
-            raise SystemExit(1)
-        if rows[i][row] == "M3" or rows[i][row] == "M4" or rows[i][row] == "M5" or rows[i][row] == "M6":
-            print(
-                f" В таблице bom есть не исключенные компоненты вероятно это M3/M4/M5/M6 в элементе: {rows[i][designator_row]} - они не являются обьектами спецификации")
-            raise SystemExit(1)
+            errors.append(f" В таблице bom есть незаполненные поля Footprint в элементе: {rows[i][designator_row]}")
+        elif rows[i][row] == "M3" or rows[i][row] == "M4" or rows[i][row] == "M5" or rows[i][row] == "M6":
+            errors.append(f" В таблице bom есть не исключенные компоненты вероятно это M3/M4/M5/M6 в элементе: {rows[i][designator_row]} - они не являются обьектами спецификации")
+    if errors:
+        for error in errors:
+            print(error)
+        raise SystemExit(1)
 
 
 def bom_check_designator(rows):
     row = get_row(rows, "Designator")
+    errors = []
     for i in range(1, len(rows)):
         if rows[i][row] == "" or rows[i][row] == " ":
-            print(f" В таблице bom есть незаполненные поля Designator в строке {i + 1}")
-            raise SystemExit(1)
+            errors.append(f" В таблице bom есть незаполненные поля Designator в строке {i + 1}")
+    if errors:
+        for error in errors:
+            print(error)
+        raise SystemExit(1)
 
 
 def bom_check_headers(rows):
@@ -110,12 +124,41 @@ def bom_check(bom_directory):
     with open(bom, newline='', encoding='cp1251', ) as csvfile:
         reader = csv.reader(csvfile, delimiter=',', quotechar='"')
         rows = make_rows(reader)
-        bom_check_headers(rows)
-        bom_check_part(rows)
-        bom_check_description(rows)
-        bom_check_designator(rows)
-        bom_check_footprint(rows)
+        
+        has_errors = False
+        
+        # Проверяем заголовки - критическая ошибка
+        try:
+            bom_check_headers(rows)
+        except SystemExit:
+            csvfile.close()
+            raise
+        
+        # Собираем все остальные ошибки
+        try:
+            bom_check_part(rows)
+        except SystemExit:
+            has_errors = True
+        
+        try:
+            bom_check_description(rows)
+        except SystemExit:
+            has_errors = True
+        
+        try:
+            bom_check_designator(rows)
+        except SystemExit:
+            has_errors = True
+        
+        try:
+            bom_check_footprint(rows)
+        except SystemExit:
+            has_errors = True
+        
         csvfile.close()
+        
+        if has_errors:
+            raise SystemExit(1)
 
 
 def get_bom():
