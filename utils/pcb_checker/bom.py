@@ -20,32 +20,35 @@ def get_row(rows, name):
 
 def bom_check_part(rows): # TODO бывают просто платы без компонент добавить такой вариант
     row = get_row(rows, "Part")
+    designator_row = get_row(rows, "Designator")
     if len(rows) < 2:
         print(" В таблице bom не хватает данных")
         raise SystemExit(1)
     for i in range(1, len(rows)):
         if rows[i][row] == "" or rows[i][row] == " " or rows[i][row] == "M3" or rows[i][row] == "M4":
-            print(" В таблице bom есть незаполненные поля Part")
+            print(f" В таблице bom есть незаполненные поля Part в элементе: {rows[i][designator_row]}")
             raise SystemExit(1)
 
 
 def bom_check_description(rows):
     row = get_row(rows, "Description")
+    designator_row = get_row(rows, "Designator")
     for i in range(1, len(rows)):
         if rows[i][row] == "" or rows[i][row] == " ":
-            print(" В таблице bom есть незаполненные поля Description")
+            print(f" В таблице bom есть незаполненные поля Description в элементе: {rows[i][designator_row]}")
             raise SystemExit(1)
 
 
 def bom_check_footprint(rows):
     row = get_row(rows, "Footprint")
+    designator_row = get_row(rows, "Designator")
     for i in range(1, len(rows)):
         if rows[i][row] == "" or rows[i][row] == " ":
-            print(" В таблице bom есть незаполненные поля Footprint")
+            print(f" В таблице bom есть незаполненные поля Footprint в элементе: {rows[i][designator_row]}")
             raise SystemExit(1)
         if rows[i][row] == "M3" or rows[i][row] == "M4" or rows[i][row] == "M5" or rows[i][row] == "M6":
             print(
-                " В таблице bom есть не исключенные компоненты вероятно это M3/M4/M5/M6 - они не являются обьектами спецификации")
+                f" В таблице bom есть не исключенные компоненты вероятно это M3/M4/M5/M6 в элементе: {rows[i][designator_row]} - они не являются обьектами спецификации")
             raise SystemExit(1)
 
 
@@ -53,7 +56,7 @@ def bom_check_designator(rows):
     row = get_row(rows, "Designator")
     for i in range(1, len(rows)):
         if rows[i][row] == "" or rows[i][row] == " ":
-            print(" В таблице bom есть незаполненные поля Designator")
+            print(f" В таблице bom есть незаполненные поля Designator в строке {i + 1}")
             raise SystemExit(1)
 
 
@@ -90,8 +93,15 @@ def find_bom(bom_directory):
 
 def make_rows(reader):
     rows = []
+    skipped_count = 0
     for row in reader:
-        rows.append(row)
+        # Пропускаем пустые строки (где все ячейки пустые)
+        if row and any(cell.strip() for cell in row):
+            rows.append(row)
+        else:
+            skipped_count += 1
+    if skipped_count > 0:
+        print(f"В BOM файле есть пустые строки. Они не будут учитываться при проверке.")
     return rows
 
 
