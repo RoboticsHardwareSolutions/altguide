@@ -93,15 +93,27 @@ def find_bom(bom_directory):
 
 def make_rows(reader):
     rows = []
-    skipped_count = 0
+    first_empty_skipped = False
+    row_number = 0
+    
     for row in reader:
-        # Пропускаем пустые строки (где все ячейки пустые)
-        if row and any(cell.strip() for cell in row):
-            rows.append(row)
-        else:
-            skipped_count += 1
-    if skipped_count > 0:
-        print(f"В BOM файле есть пустые строки. Они не будут учитываться при проверке.")
+        row_number += 1
+        # Проверяем, является ли строка пустой
+        is_empty = not row or not any(cell.strip() for cell in row)
+        
+        if is_empty:
+            if not first_empty_skipped and row_number == 2:
+                # Пропускаем первую пустую строку после заголовка (строка 2)
+                first_empty_skipped = True
+                print("Первая пустая строка после заголовка (строка 2) проигнорирована - это стандартная строка Altium")
+                continue
+            else:
+                # Все остальные пустые строки - ошибка
+                print(f"Ошибка: В BOM файле обнаружена пустая строка {row_number}. Удалите все пустые строки кроме первой после заголовка.")
+                raise SystemExit(1)
+        
+        rows.append(row)
+    
     return rows
 
 
