@@ -71,42 +71,84 @@ test_bom/
 
 ## Запуск тестов
 
+Для запуска тестов необходим pytest. Установите зависимости:
+
+```bash
+pip install -r requirements.txt
+```
+
+Или установите pytest напрямую:
+```bash
+pip install pytest
+```
+
 ### Из директории test_bom:
 ```bash
-python test_bom.py
+pytest test_bom.py -v
 ```
 
 ### Из корневой директории pcb_checker:
 ```bash
-python test_bom/test_bom.py
+pytest test_bom/test_bom.py -v
+```
+
+### Запуск конкретного теста:
+```bash
+pytest test_bom.py::test_valid_bom -v
+```
+
+### Запуск с детальным выводом:
+```bash
+pytest test_bom.py -vv
+```
+
+### Запуск с остановкой на первой ошибке:
+```bash
+pytest test_bom.py -x
 ```
 
 ## Интерпретация результатов
 
-Каждый тест выводит:
-- ✅ PASSED - тест пройден успешно
-- ❌ FAILED - тест провален
+Pytest выводит результаты в стандартном формате:
+- `.` - тест пройден
+- `F` - тест провален
+- `E` - ошибка выполнения теста
 
-В конце выводится итоговая статистика:
-- Общее количество тестов
-- Количество пройденных тестов
-- Количество проваленных тестов
-- Список проваленных тестов с причинами
+В конце выводится итоговая статистика с количеством пройденных и проваленных тестов.
+
+Пример вывода:
+```
+test_bom.py::test_valid_bom PASSED                                  [ 11%]
+test_bom.py::test_bom_errors[Bill of Materials-empty_part.csv-...] PASSED [ 22%]
+...
+========================== 9 passed in 0.15s ===========================
+```
 
 ## Добавление новых тестов
 
-Чтобы добавить новый тест:
+### Для тестов с ошибками:
 
-1. Создайте CSV файл в директории `test_data/` с именем `Bill of Materials-<имя теста>.csv`
-2. Добавьте тест в список `tests` в функции `main()` файла `test_bom.py`:
+Добавьте параметры в декоратор `@pytest.mark.parametrize` функции `test_bom_errors`:
 
 ```python
-{
-    "name": "Описание теста",
-    "file": "Bill of Materials-<имя теста>.csv",
-    "should_fail": True,  # или False
-    "expected_error": "текст ожидаемой ошибки"  # опционально
-}
+@pytest.mark.parametrize("test_file,expected_error", [
+    # ... существующие тесты ...
+    ("Bill of Materials-<новый_тест>.csv", "текст ожидаемой ошибки"),
+])
+```
+
+### Для специфичных тестов:
+
+Создайте отдельную функцию теста:
+
+```python
+def test_custom_check(temp_bom_dir):
+    """Описание теста"""
+    test_file = os.path.join(TEST_DATA_DIR, "Bill of Materials-custom.csv")
+    success, output = run_bom_check(test_file, temp_bom_dir)
+    
+    assert not success, "Ожидалась ошибка"
+    assert "текст ошибки" in output, "Ожидаемая ошибка не найдена"
 ```
 
 ## Примечания
