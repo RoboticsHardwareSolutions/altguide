@@ -4,3 +4,11 @@ utils/pcb_specgen/.idea
 utils/low_name/.idea/
 altlib/pcblibs/History/
 altlib/schlibs/History/
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Testing
+.pytest_cache/
