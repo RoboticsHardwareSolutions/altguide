@@ -1,12 +1,13 @@
 import os
 
 def pcbdoc_delete_if_found(doc_list, name):
-    try:
-        index = doc_list.index(name)
-    except ValueError:
-        index = None
+    index = None
+    for i, item in enumerate(doc_list):
+        if item.lower() == name.lower():
+            index = i
+            break
     if index is not None:
-        doc_list.remove(name)
+        doc_list.pop(index)
 
 
 def pcb_list_checker_trash(pcb_list):
@@ -21,12 +22,12 @@ def pcb_list_checker_trash(pcb_list):
 
 
 def pcb_folder_board_options(pcb_list):
-    try:
-        pcb_list.index("board_options.txt")
-        pcb_list.remove("board_options.txt")
-    except ValueError:
-        print("Файл board_options.txt отсутствует в /doc/pcb/ ")
-        raise SystemExit(1)
+    for i, item in enumerate(pcb_list):
+        if item.lower() == "board_options.txt":
+            pcb_list.pop(i)
+            return
+    print("Файл board_options.txt отсутствует в /doc/pcb/ ")
+    raise SystemExit(1)
 
 
 def pcb_folder_pick_place(pcb_list):
@@ -48,39 +49,39 @@ def pcb_folder_bom(pcb_list):
 
 
 def pcb_folder_gerber(pcb_list):
-    try:
-        pcb_list.index("gerber")
-        pcb_list.remove("gerber")
-    except ValueError:
-        print("Папка gerber отсутствует в /doc/pcb/gerber/ ")
-        raise SystemExit(1)
+    for i, item in enumerate(pcb_list):
+        if item.lower() == "gerber":
+            pcb_list.pop(i)
+            return
+    print("Папка gerber отсутствует в /doc/pcb/gerber/ ")
+    raise SystemExit(1)
 
 
 def pcb_folder_schematic_prints(pcb_list):
-    try:
-        pcb_list.index("Schematic Prints.PDF")
-        pcb_list.remove("Schematic Prints.PDF")
-    except ValueError:
-        print("Файл Schematic Prints.PDF отсутствует в /doc/pcb/ ")
-        raise SystemExit(1)
+    for i, item in enumerate(pcb_list):
+        if item.lower() == "schematic prints.pdf":
+            pcb_list.pop(i)
+            return
+    print("Файл Schematic Prints.PDF отсутствует в /doc/pcb/ ")
+    raise SystemExit(1)
 
 
 def pcb_folder_assembly_drawings(pcb_list):
-    try:
-        pcb_list.index("Assembly Drawings.PDF")
-        pcb_list.remove("Assembly Drawings.PDF")
-    except ValueError:
-        print("Файл Assembly Drawings.PDF отсутствует в /doc/pcb/ ")
-        raise SystemExit(1)
+    for i, item in enumerate(pcb_list):
+        if item.lower() == "assembly drawings.pdf":
+            pcb_list.pop(i)
+            return
+    print("Файл Assembly Drawings.PDF отсутствует в /doc/pcb/ ")
+    raise SystemExit(1)
     
 
 def pcb_folder_draftsman(pcb_list):
-    try:
-        pcb_list.index("Draftsman.PDF")
-        pcb_list.remove("Draftsman.PDF")
-    except ValueError:
-        print("Файл Draftsman.PDF отсутствует в /doc/pcb/ ")
-        raise SystemExit(1)
+    for i, item in enumerate(pcb_list):
+        if item.lower() == "draftsman.pdf":
+            pcb_list.pop(i)
+            return
+    print("Файл Draftsman.PDF отсутствует в /doc/pcb/ ")
+    raise SystemExit(1)
 
 
 def doc_pcb_folder_check(doc_pcb):
