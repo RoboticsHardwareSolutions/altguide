@@ -4,8 +4,15 @@ import csv
 
 def make_rows(reader):
     rows = []
+    skipped_count = 0
     for row in reader:
-        rows.append(row)
+        # Пропускаем пустые строки (где все ячейки пустые)
+        if row and any(cell.strip() for cell in row):
+            rows.append(row)
+        else:
+            skipped_count += 1
+    if skipped_count > 0:
+        print(f"В BOM файле есть пустые строки. Они не будут учитываться при проверке.")
     return rows
 
 
