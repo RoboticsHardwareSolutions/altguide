@@ -57,7 +57,8 @@ def board_option_check(options):
             "Подробней тут https://www.rezonit.ru/directory/v-pomoshch-konstruktoru/kharakteristiki-finishnykh-pokrytiy/")
         raise SystemExit(1)
     pcb_color = board_opt.get('pcb_color')
-    if pcb_color is None or not (pcb_color == "black" or pcb_color == "green" or pcb_color == "blue" or pcb_color == "red"):
+    if pcb_color is None or not (
+            pcb_color == "black" or pcb_color == "green" or pcb_color == "blue" or pcb_color == "red"):
         print("Поле 'pcb_color' отсутсвует или содержит неверное значение   ")
         print("Возможные варианты 'black' / 'green' / 'blue' / 'red' ")
         raise SystemExit(1)
@@ -95,7 +96,7 @@ def board_option_check(options):
         print("Поле 'width' отсутсвует или содержит неверное значение")
         raise SystemExit(1)
     drill_file_check = board_opt.get("drill_file_check")
-    if drill_file_check is not None: # делает существование этого поля в файле необязательным
+    if drill_file_check is not None:  # делает существование этого поля в файле необязательным
         if not isinstance(drill_file_check, bool):
             print("Поле 'drill_file_check' содержит неверное значение (ожидается 'true' или 'false')")
             raise SystemExit(1)

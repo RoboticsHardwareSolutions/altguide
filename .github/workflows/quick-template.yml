@@ -11,7 +11,7 @@ on:
 
 jobs:
   create-quick-template:
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     
     steps:
       - name: Checkout repository
@@ -19,8 +19,7 @@ jobs:
         with:
           fetch-depth: 1
           sparse-checkout: |
-            files
-            altguide.md
+            template
           sparse-checkout-cone-mode: false
         
       - name: Get current date
@@ -33,28 +32,8 @@ jobs:
           
       - name: Copy template files
         run: |
-          # Copy all files from files directory
-          cp -r files/* "${{ inputs.template_name }}/"
-          
-          # Copy documentation
-          cp altguide.md "${{ inputs.template_name }}/PROJECT_SETUP_GUIDE.md"
-          
-      - name: Create quick template README
-        run: |
-          cat > "${{ inputs.template_name }}/TEMPLATE_INFO.md" << 'EOF'
-          # RHS Altium Project Template
-          
-          **Project Name:** ${{ inputs.template_name }}
-          **Generated on:** ${{ steps.date.outputs.date }}
-          
-          ## Quick Setup:
-          1. Rename files for your project
-          2. Update README.md with project details  
-          3. Configure .github/workflows as needed
-          4. Start developing!
-          
-          For detailed instructions see PROJECT_SETUP_GUIDE.md
-          EOF
+          # Copy all files from template directory
+          cp -r template/* "${{ inputs.template_name }}/"
           
       - name: Create template archive
         run: |
