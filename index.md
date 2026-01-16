@@ -205,6 +205,23 @@ PATH: "vault://attach/board_options.txt"
 
 ![[ext_bom.png]]
 
+## Быстрый старт 
+
+Существует два способа (помимо ручного) создания проекта по данному гайду, далее о них. 
+
+### Создание проекта Github Actions 
+
+- Перейдите по  [ссылке](https://github.com/RoboticsHardwareSolutions/altguide/actions/workflows/quick-template.yml). 
+- Нажмите на кнопку `Run workflow`
+- Введите имя проекта 
+- Дождитесь выполнения 
+- Скачайте архив 
+
+Архив доступен в разделе артефакты:
+![[Screenshot 2026-01-16 at 09.47.08.png]]
+### Создание проекта локально 
+
+Используйте скрипт - [ссылка](https://github.com/RoboticsHardwareSolutions/altguide/tree/main/utils/project_template)
 
 ## Автоматизированная проверка документации  - СI
 
