@@ -75,7 +75,7 @@ def bom_check_designator(rows):
 
 
 def bom_check_headers(rows):
-    ok = 7
+    ok = 8
     if rows[0][0] == "Description":
         ok -= 1
     if rows[0][1] == "Comment":
@@ -88,12 +88,14 @@ def bom_check_headers(rows):
         ok -= 1
     if rows[0][5] == "Alternative Part":
         ok -= 1
-    if rows[0][6] == "Quantity":
+    if rows[0][6] == "JLCPCB Part":
+        ok -= 1
+    if rows[0][7] == "Quantity":
         ok -= 1
     if ok != 0:
         print(" В таблице с bom содержатся неверные названия заголовков столбцов")
         print(
-            "Требуемые : 'Description', 'Comment', 'Designator', 'Footprint', 'Part', 'Alternative Part', 'Quantity' ")
+            "Требуемые : 'Description', 'Comment', 'Designator', 'Footprint', 'Part', 'Alternative Part', 'JLCPCB Part', 'Quantity' ")
         raise SystemExit(1)
 
 
