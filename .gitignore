@@ -8,3 +8,5 @@ utils/pcb_specgen/.idea
 utils/low_name/.idea/
 altlib/pcblibs/History/
 altlib/schlibs/History/
+altlib/schlibs/unsort/History/
+altlib/schlibs/unsort/__Previews/
